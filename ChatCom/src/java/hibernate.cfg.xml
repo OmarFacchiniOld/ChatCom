@@ -47,10 +47,9 @@ Contributor(s):
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.hbm2ddl.auto">validate</property>
     <property name="hibernate.show_sql">true</property>
-    <mapping resource="chatcom/model/Message.hbm.xml"/>
-    <mapping resource="chatcom/model/Instance.hbm.xml"/>
-    <mapping resource="chatcom/model/User.hbm.xml"/>
-    <mapping resource="chatcom/model/Chatgroup.hbm.xml"/>
-    <mapping resource="chatcom/model/hibernate.hbm.xml"/>
+    <mapping class="chatcom.model.User"/>
+    <mapping class="chatcom.model.Chatgroup"/>
+    <mapping class="chatcom.model.Message"/>
+    <mapping class="chatcom.model.Instance"/>
   </session-factory>
 </hibernate-configuration>
