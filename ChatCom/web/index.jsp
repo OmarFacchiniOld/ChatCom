@@ -7,11 +7,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <jsp:include page="WEB-INF/template/header.jsp"/>
+<jsp:include page="WEB-INF/template/navbar.jsp"/>
+<jsp:include page="WEB-INF/template/modal.jsp"/>
+<jsp:include page="WEB-INF/template/mainpage.jsp"/>
     
-<div>
-    <h1>ChatCom</h1>
-    <i class="material-icons">speaker_notes</i>
-    <%out.println("Println dalla jsp");%>
-</div>
     
 <jsp:include page="WEB-INF/template/footer.jsp"/>
