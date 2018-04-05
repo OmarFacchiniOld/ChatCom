@@ -9,7 +9,7 @@
 
  <footer class="footer purple">
       <div class="container">
-        <span class="text-muted">Place sticky footer content here.</span>
+        <div>GO TO GIT <a href="https://github.com/OmarFacchini/ChatCom">HERE</div></p>
       </div>
     </footer>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

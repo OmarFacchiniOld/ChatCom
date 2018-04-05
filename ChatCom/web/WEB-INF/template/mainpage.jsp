@@ -9,6 +9,12 @@
 
 <div class="container central">
     <br />
+    <div class="row" style="border-bottom: 3px solid black">
+        <div class="col">
+            <h1 class="text-center font-weight-bold">Chatcom</h1>
+        </div>
+    </div>
+    <br />
     <div class="row">
         <div class="col">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -84,28 +90,80 @@
         </div>
     </div>
     <br />
+    <div class="row" style="border-bottom: 3px solid black">
+        <div class="col">
+            <h3 class="text-center font-weight-bold">Five stars features</h3>
+        </div>
+    </div>
+    <br />
     <div class="row justify-content-center">
         <div class="col">
             <div class="card">
-                <img class="card-img-top" src="images/test.jpeg" alt="Card image cap">
-                <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <img class="card-img-top" src="images/iot.jpeg" alt="Card image cap">
+                <div class="card-body lightpurple">
+                    <p class="card-text">Connect whit your account from every device</p>
                 </div>
             </div>
         </div>
         <div class="col">
             <div class="card">
-                <img class="card-img-top" src="images/test.jpeg" alt="Card image cap">
-                <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <img class="card-img-top" src="images/amaca.jpeg" alt="Card image cap">
+                <div class="card-body lightpurple">
+                    <div class="card-text">Relax</div>
+                    <div class="card-text">Chat and send media is easiest now</div>
                 </div>
             </div>
         </div>
         <div class="col">
             <div class="card">
-                <img class="card-img-top" src="images/test.jpeg" alt="Card image cap">
-                <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <img class="card-img-top" src="images/money.jpeg" alt="Card image cap">
+                <div class="card-body lightpurple">
+                    <p class="card-text">This service is totally free Enjoy the chat and share it</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row" style="border-bottom: 3px solid black">
+        <div class="col">
+            <h3 class="text-center font-weight-bold">Team</h3>
+        </div>
+    </div>
+    <br />
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="card">
+                <img class="card-img" src="images/test.jpeg" alt="Card image">
+                <div class="card-img-overlay">
+                    <h5 class="card-title">Abate Simone</h5>
+                    <p class="card-text">Client Side Design</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <img class="card-img" src="images/test2.jpeg" alt="Card image">
+                <div class="card-img-overlay">
+                    <h5 class="card-title">Facchini Omar</h5>
+                    <p class="card-text">Service Rest</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <img class="card-img" src="images/fast.jpeg" alt="Card image">
+                <div class="card-img-overlay">
+                    <h5 class="card-title">Uberti Davide</h5>
+                    <p class="card-text">Hibernate and co-worker</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <img class="card-img" src="images/city.jpeg" alt="Card image">
+                <div class="card-img-overlay">
+                    <h5 class="card-title">Libri Demetrio</h5>
+                    <p class="card-text">I don't know</p>
                 </div>
             </div>
         </div>
