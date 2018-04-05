@@ -9,7 +9,7 @@
 <jsp:include page="WEB-INF/template/header.jsp"/>
 <jsp:include page="WEB-INF/template/navbar.jsp"/>
 <jsp:include page="WEB-INF/template/modal.jsp"/>
-<jsp:include page="WEB-INF/template/carousel.jsp"/>
+<jsp:include page="WEB-INF/template/mainpage.jsp"/>
     
     
 <jsp:include page="WEB-INF/template/footer.jsp"/>
