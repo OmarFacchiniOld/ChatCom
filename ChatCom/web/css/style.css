@@ -16,6 +16,10 @@ body{
     font-family: 'Open Sans', sans-serif;
     background-color: #CE93D8;
     margin-bottom: 60px;
+    background-image: url(../images/cubetwo.jpeg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .purple{
@@ -37,7 +41,11 @@ body{
 }
 
 .img-carousel{
-    height: 30em;
+    height: 100%;
+}
+
+.up{
+    box-shadow: 10px 10px 18px black;
 }
 
 .underline{

@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<nav class="navbar navbar-expand-lg navbar-dark purple">
+<nav class="navbar up navbar-expand-lg navbar-dark purple">
   <a class="navbar-brand" href="#">Chatcom</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>

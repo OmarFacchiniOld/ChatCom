@@ -7,7 +7,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-<div class="container central">
+<br />
+<br />
+<div class="container central up">
     <br />
     <div class="row" style="border-bottom: 3px solid black">
         <div class="col">
@@ -17,7 +19,7 @@
     <br />
     <div class="row">
         <div class="col">
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <div id="carouselExampleIndicators" class="carousel slide up" data-ride="carousel">
                 
                 <ol class="carousel-indicators">
                     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -98,7 +100,7 @@
     <br />
     <div class="row justify-content-center">
         <div class="col">
-            <div class="card">
+            <div class="card up">
                 <img class="card-img-top" src="images/iot.jpeg" alt="Card image cap">
                 <div class="card-body lightpurple">
                     <p class="card-text">Connect whit your account from every device</p>
@@ -106,7 +108,7 @@
             </div>
         </div>
         <div class="col">
-            <div class="card">
+            <div class="card up">
                 <img class="card-img-top" src="images/amaca.jpeg" alt="Card image cap">
                 <div class="card-body lightpurple">
                     <div class="card-text">Relax</div>
@@ -115,7 +117,7 @@
             </div>
         </div>
         <div class="col">
-            <div class="card">
+            <div class="card up">
                 <img class="card-img-top" src="images/money.jpeg" alt="Card image cap">
                 <div class="card-body lightpurple">
                     <p class="card-text">This service is totally free Enjoy the chat and share it</p>
@@ -132,7 +134,7 @@
     <br />
     <div class="row justify-content-center">
         <div class="col">
-            <div class="card">
+            <div class="card up">
                 <img class="card-img" src="images/test.jpeg" alt="Card image">
                 <div class="card-img-overlay">
                     <h5 class="card-title">Abate Simone</h5>
@@ -141,7 +143,7 @@
             </div>
         </div>
         <div class="col">
-            <div class="card">
+            <div class="card up">
                 <img class="card-img" src="images/test2.jpeg" alt="Card image">
                 <div class="card-img-overlay">
                     <h5 class="card-title">Facchini Omar</h5>
@@ -150,7 +152,7 @@
             </div>
         </div>
         <div class="col">
-            <div class="card">
+            <div class="card up">
                 <img class="card-img" src="images/fast.jpeg" alt="Card image">
                 <div class="card-img-overlay">
                     <h5 class="card-title">Uberti Davide</h5>
@@ -159,7 +161,7 @@
             </div>
         </div>
         <div class="col">
-            <div class="card">
+            <div class="card up">
                 <img class="card-img" src="images/city.jpeg" alt="Card image">
                 <div class="card-img-overlay">
                     <h5 class="card-title">Libri Demetrio</h5>
@@ -170,4 +172,5 @@
     </div>
     <br />
 </div>
+<br />
 <br />
