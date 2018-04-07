@@ -5,7 +5,9 @@
  */
 package chatcom.rest;
 
+import chatcom.hibernateutil.HibernateUtil;
 import chatcom.model.Message;
+import com.google.gson.Gson;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -19,6 +21,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -36,10 +41,26 @@ public class MessageFacadeREST extends AbstractFacade<Message> {
     }
 
     @POST
-    @Override
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Message entity) {
-        super.create(entity);
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createMessage(String body) {
+        Gson gson = new Gson();
+        
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        
+        
+        Message message = gson.fromJson(body, Message.class);
+        
+        //Codice hibernate per il salvataggio
+        session.beginTransaction();
+        session.save(message);
+        session.getTransaction().commit();
+
+        //deallochiamo le risorse
+        session.close();
+        sessionFactory.close();
+        
+        return Response.ok(message).build();
     }
 
     @PUT
