@@ -102,7 +102,6 @@ public class MessageFacadeREST extends AbstractFacade<Message> {
             Gson g = new Gson();
             
             String query = "DELETE FROM `message` WHERE `id`" + id + ";";
-            //Message message = g.fromJson(body, Message.class);
             PreparedStatement s1 = connection.prepareStatement(query);
             int r = s1.executeUpdate(query);
             
