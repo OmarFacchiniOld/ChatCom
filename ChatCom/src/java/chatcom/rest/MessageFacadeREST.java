@@ -8,7 +8,12 @@ package chatcom.rest;
 import chatcom.hibernateutil.HibernateUtil;
 import chatcom.model.Message;
 import com.google.gson.Gson;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -35,6 +40,7 @@ public class MessageFacadeREST extends AbstractFacade<Message> {
 
     @PersistenceContext(unitName = "")
     private EntityManager em;
+    private Connection connection;
 
     public MessageFacadeREST() {
         super(Message.class);
@@ -65,15 +71,48 @@ public class MessageFacadeREST extends AbstractFacade<Message> {
 
     @PUT
     @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Integer id, Message entity) {
-        super.edit(entity);
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response edit(@PathParam("id") Integer id, Message message, String body) {
+        
+        try {
+            Gson g = new Gson();
+            
+            String newMessage = "";  //inserire codice che prenda il messaggio che verra modificato nella parte grafica e lo metta nella stringa
+            
+            
+            String query = "UPDATE `message` SET `data` =" + newMessage+ " WHERE `id` =" + id + ";"; //o al posto di id mettere message.getId();
+            message = g.fromJson(body, Message.class);
+            PreparedStatement s1 = connection.prepareStatement(query);
+            int r = s1.executeUpdate(query);
+            
+            
+            //DatabaseManager.getInstance().setLog(log);
+        } catch (SQLException ex) {
+            Logger.getLogger(MessageFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return Response.ok(message).build();
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
+    public Response remove(@PathParam("id") Integer id) {
+        
+        try {
+            Gson g = new Gson();
+            
+            String query = "DELETE FROM `message` WHERE `id`" + id + ";";
+            //Message message = g.fromJson(body, Message.class);
+            PreparedStatement s1 = connection.prepareStatement(query);
+            int r = s1.executeUpdate(query);
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MessageFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return Response.ok().build();
+        
     }
 
     @GET
