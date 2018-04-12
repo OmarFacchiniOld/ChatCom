@@ -41,24 +41,25 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-        <form action="#" method="POST"> 
+        <form id="register" action="http://localhost" method="POST"> 
             <div class="modal-body">
-                <input type="text" class="form-control" placeholder="Insert first name" name="firstname"><br />
-                <input type="text" class="form-control" placeholder="Insert last name" name="lastname"><br />
+                <input id="first" type="text" class="form-control" placeholder="Insert first name" name="firstname"><br />
+                <input id="last" type="text" class="form-control" placeholder="Insert last name" name="lastname"><br />
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
                         <div class="input-group-text">@</div>
                     </div>
-                    <input type="text" class="form-control" placeholder="Insert nickname" name="nickname">
+                    <input id="nick" type="text" class="form-control" placeholder="Insert nickname" name="nickname">
                 </div><br />
-                <input type="email" class="form-control" placeholder="Insert email" name="email"><br />
-                <input type="password" class="form-control" placeholder="Insert password" aria-describedby="passwordHelpBlock" name="password">
+                <input id="email" type="email" class="form-control" placeholder="Insert email" name="email"><br />
+                <input id="pass" type="password" class="form-control" placeholder="Insert password" name="password"><br />
+                <input id="pass2" type="password" class="form-control" placeholder="Insert password" aria-describedby="passwordHelpBlock" name="confirm-password">
                 <small id="passwordHelpBlock" class="form-text" style="color: #CE93D8">
-                    Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+                    Your password must be 8-20 characters long, contain letters and/or numbers.
                 </small><br />
             </div>
             <div class="modal-footer">
-                <input type="submit" class="btn btn-sm btn-outline-success" value="Register">
+                <input id="sendregister" type="submit" class="btn btn-sm btn-outline-success" value="Register">
             </div>
         </form>
     </div>
