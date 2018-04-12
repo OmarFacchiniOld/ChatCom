@@ -84,13 +84,27 @@ public class ChatgroupResource{
         }
         
         return Response.ok().build();
-    }
+    }*/
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
-    }*/
+    public Response remove(@PathParam("id") Integer id) {
+        
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        
+        //Codice hibernate per il salvataggio
+        session.beginTransaction();
+        Chatgroup chatGroup = (Chatgroup) session.get(Chatgroup.class, id);
+        session.delete(chatGroup);
+        session.getTransaction().commit();
+
+        //deallochiamo le risorse
+        session.close();
+        sessionFactory.close();
+        
+        return Response.ok().build();
+    }
 
     @GET
     @Path("{id}")

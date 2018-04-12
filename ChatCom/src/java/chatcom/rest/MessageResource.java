@@ -83,27 +83,27 @@ public class MessageResource{
         }
         
         return Response.ok(message).build();
-    }
+    }*/
 
     @DELETE
     @Path("{id}")
     public Response remove(@PathParam("id") Integer id) {
         
-        try {
-            Gson g = new Gson();
-            
-            String query = "DELETE FROM `message` WHERE `id`" + id + ";";
-            PreparedStatement s1 = connection.prepareStatement(query);
-            int r = s1.executeUpdate(query);
-            
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(MessageResource.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
         
-        return Response.ok().build();
+        //Codice hibernate per il salvataggio
+        session.beginTransaction();
+        Message message = (Message) session.get(Message.class, id);
+        session.delete(message);
+        session.getTransaction().commit();
+
+        //deallochiamo le risorse
+        session.close();
+        sessionFactory.close();
         
-    }*/
+        return Response.ok().build();   
+    }
 
     @GET
     @Path("{id}")

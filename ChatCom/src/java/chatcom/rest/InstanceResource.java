@@ -60,13 +60,26 @@ public class InstanceResource{
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Integer id, Instance entity) {
         super.edit(entity);
-    }
+    }*/
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
-    }*/
+    public Response remove(@PathParam("id") Integer id) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        
+        //Codice hibernate per il salvataggio
+        session.beginTransaction();
+        Instance instance = (Instance) session.get(Instance.class, id);
+        session.delete(instance);
+        session.getTransaction().commit();
+
+        //deallochiamo le risorse
+        session.close();
+        sessionFactory.close();
+        
+        return Response.ok().build();
+    }
 
     @GET
     @Path("{id}")

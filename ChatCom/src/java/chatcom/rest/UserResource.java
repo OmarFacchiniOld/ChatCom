@@ -85,13 +85,26 @@ public class UserResource{
         
         return Response.ok().build();
         
-    }
+    }*/
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
+    public Response remove(@PathParam("id") Integer id) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
         
-    }*/
+        //Codice hibernate per il salvataggio
+        session.beginTransaction();
+        User user = (User) session.get(User.class, id);
+        session.delete(user);
+        session.getTransaction().commit();
+
+        //deallochiamo le risorse
+        session.close();
+        sessionFactory.close();
+        
+        return Response.ok().build();
+    }
 
     @GET
     @Path("{id}")
