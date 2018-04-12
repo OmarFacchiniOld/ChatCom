@@ -10,4 +10,4 @@
 <%--<jsp:include page="WEB-INF/template/navbar.jsp"/>--%>
 <jsp:include page="WEB-INF/template/chatmain.jsp"/>
 
-<jsp:include page="WEB-INF/template/footer.jsp"/>
+<jsp:include page="WEB-INF/template/footerchat.jsp"/>

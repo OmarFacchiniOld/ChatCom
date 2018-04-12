@@ -11,168 +11,36 @@
     <div id="chat" class="row upperrow text-center">
         <div id="chatcontainer" class="container-fluid chatcontainer">
             <br />
-            
-            <div class="row">
-                <div class="col-1"></div>
-                <div class="col-2">
-                    <div class="card message">
-                        <div class="card-header">
-                            Featured
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">Some quick example sjfliasglijdòoasjdfoiwehgòoldsjkdiewytgijlòosau</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-9"></div>
-            </div>
-            
-            <div class="row">
-                <div class="col-9"></div>
-                <div class="col-2">
-                    <div class="card message">
-                        <div class="card-header">
-                            Featured
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">Some quick example</p>
-                        </div>
-                    </div>
-                    <div class="col-1"></div>
-                </div>
-            </div>
-            
-            <div class="row">
-                <div class="col-1"></div>
-                <div class="col-2">
-                    <div class="card message">
-                        <div class="card-header">
-                            Featured
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">Some quick example</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-9"></div>
-            </div>
-            
-            <div class="row">
-                <div class="col-9"></div>
-                <div class="col-2">
-                    <div class="card message">
-                        <div class="card-header">
-                            Featured
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">Some quick example</p>
-                        </div>
-                    </div>
-                    <div class="col-1"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-1"></div>
-                <div class="col-2">
-                    <div class="card message">
-                        <div class="card-header">
-                            Featured
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">Some quick example</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-9"></div>
-            </div>
-            
-            <div class="row">
-                <div class="col-9"></div>
-                <div class="col-2">
-                    <div class="card message">
-                        <div class="card-header">
-                            Featured
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">Some quick example</p>
-                        </div>
-                    </div>
-                    <div class="col-1"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-1"></div>
-                <div class="col-2">
-                    <div class="card message">
-                        <div class="card-header">
-                            Featured
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">Some quick example</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-9"></div>
-            </div>
-            
-            <div class="row">
-                <div class="col-9"></div>
-                <div class="col-2">
-                    <div class="card message">
-                        <div class="card-header">
-                            Featured
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">Some quick example</p>
-                        </div>
-                    </div>
-                    <div class="col-1"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-1"></div>
-                <div class="col-2">
-                    <div class="card message">
-                        <div class="card-header">
-                            Featured
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">Some quick example</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-9"></div>
-            </div>
-            
-            <div class="row">
-                <div class="col-9"></div>
-                <div class="col-2">
-                    <div class="card message">
-                        <div class="card-header">
-                            Featured
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">Some quick example</p>
-                        </div>
-                    </div>
-                    <div class="col-1"></div>
-                </div>
-            </div>
-            
+            <div id="start"></div>
+            <!--    insert by jquery        -->
             <br />
         </div>
     </div>
     
     <div class="row centerrow align-items-end">
-        <div class="col">
+        <div class="col-1">
+            <div id="mastercard" class="card">
+                            <div class="card-header">
+                                <button id='Logoutbtn' class="btn btn-sm btn-outline-success">Logout</button>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Create new chat</h5>
+                                <div class="row">
+                                    <div class="col"></div>
+                            <div class="col">
+                                <button id="newchatbtn" type="button" class="btn btn-sm" data-toggle="modal" data-target="#NewChatModal"></button>
+                            </div>
+                        <div class="col"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-5">
             <button id="buttonopen" value=""><img src="images/arrow.svg"></button>
         </div>
         <div class="col-6">
             <div class="card messagearea">
-                <div class="card-header">
-                    <button class="btn btn-sm btn-outline-success"style="height: 32px; width: 256px;">Logout</button>
-                </div>
-                <form action="" method="" id="form">
+                <form id="messagesend">
                     <div class="card-body">
                         <div class="container-fluid">
                             <div class="row">
@@ -191,126 +59,37 @@
     </div>
     
     <div id="menu" class="row downrow">
-        
+       
         <div class="col scrollable">
-                        <div class="card" style="width: 18rem; margin-top: 2em;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-                        <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-                        <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-                        <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-                        <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-                        <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-                        <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-                        <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-                        <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-                        <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-                        <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-                        <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-                        <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
+            <div id="secondstart"></div>
+            <!--    insert by jquery        -->
         </div>
-        
-    </div>
+    </div> 
 </div>
+
+
+<div class="modal fade" id="NewChatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New chat</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <form action="#" method="POST"> 
+            <div class="modal-body">
+                <input type="text" class="form-control" placeholder="Insert username" name="username"><br />
+                <input type="password" class="form-control" placeholder="Insert password" name="password"><br />
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-sm btn-outline-success" value="Create">
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+
+
+
