@@ -22,5 +22,7 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!-- Custom style -->
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+        <!-- Load ChatCom Icon -->
+        <link rel="icon" href="${pageContext.request.contextPath}/images/icona.svg">
     </head>
     <body>
