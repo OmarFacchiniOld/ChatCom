@@ -7,9 +7,7 @@
 
 var rootURL = "https://jsonplaceholder.typicode.com/posts";
 
-$("#register").submit(function(e){
-    e.preventDefault();
-});
+
 
 $("#sendregister").click(function() {
             if($("#pass").val() != $("#pass2").val()){

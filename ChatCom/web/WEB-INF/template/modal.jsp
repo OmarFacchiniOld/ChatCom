@@ -41,7 +41,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-        <form id="register" action="http://localhost" method="POST"> 
+        <form id="register" action="http://localhost:3306/chatcom.model.user" method="POST"> 
             <div class="modal-body">
                 <input id="first" type="text" class="form-control" placeholder="Insert first name" name="firstname"><br />
                 <input id="last" type="text" class="form-control" placeholder="Insert last name" name="lastname"><br />
@@ -59,7 +59,7 @@
                 </small><br />
             </div>
             <div class="modal-footer">
-                <input id="sendregister" type="submit" class="btn btn-sm btn-outline-success" value="Register">
+                <input id="sendregister" data-dismiss="modal" data-toggle="modal" type="submit" class="btn btn-sm btn-outline-success" value="Register">
             </div>
         </form>
     </div>
