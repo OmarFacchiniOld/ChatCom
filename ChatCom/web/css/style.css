@@ -69,7 +69,7 @@ body{
     opacity: 1;
     background-color: rgba(103,58,183,0.5);
     height: 100%;
-    color: #CE93D8; 
+    color: black; 
 }
 
 .card-img-overlay:hover{

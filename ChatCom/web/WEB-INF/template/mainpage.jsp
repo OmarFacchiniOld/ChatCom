@@ -135,7 +135,7 @@
     <div class="row justify-content-center">
         <div class="col">
             <div class="card up">
-                <img class="card-img" src="images/test.jpeg" alt="Card image">
+                <img class="card-img" src="images/abate.jpg" alt="Card image">
                 <div class="card-img-overlay">
                     <h5 class="card-title">Abate Simone</h5>
                     <p class="card-text">Client Side Design</p>
@@ -144,7 +144,7 @@
         </div>
         <div class="col">
             <div class="card up">
-                <img class="card-img" src="images/test2.jpeg" alt="Card image">
+                <img class="card-img" src="images/facchini.jpg" alt="Card image">
                 <div class="card-img-overlay">
                     <h5 class="card-title">Facchini Omar</h5>
                     <p class="card-text">Service Rest</p>
@@ -153,7 +153,7 @@
         </div>
         <div class="col">
             <div class="card up">
-                <img class="card-img" src="images/fast.jpeg" alt="Card image">
+                <img class="card-img" src="images/uberti.jpg" alt="Card image">
                 <div class="card-img-overlay">
                     <h5 class="card-title">Uberti Davide</h5>
                     <p class="card-text">Hibernate and co-worker</p>
@@ -162,7 +162,7 @@
         </div>
         <div class="col">
             <div class="card up">
-                <img class="card-img" src="images/city.jpeg" alt="Card image">
+                <img class="card-img" src="images/demetrio.jpg" alt="Card image">
                 <div class="card-img-overlay">
                     <h5 class="card-title">Libri Demetrio</h5>
                     <p class="card-text">I don't know</p>
