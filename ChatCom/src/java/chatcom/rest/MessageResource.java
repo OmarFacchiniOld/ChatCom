@@ -8,15 +8,7 @@ package chatcom.rest;
 import chatcom.hibernateutil.HibernateUtil;
 import chatcom.model.Message;
 import com.google.gson.Gson;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -60,30 +52,27 @@ public class MessageResource{
         return Response.ok().build();
     }
 
-    /*@PUT
+    @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response edit(@PathParam("id") Integer id, Message message, String body) {
+    public Response edit(@PathParam("id") Integer id, Message entity) {
         
-        try {
-            Gson g = new Gson();
-            
-            String newMessage = "";  //inserire codice che prenda il messaggio che verra modificato nella parte grafica e lo metta nella stringa
-            
-            
-            String query = "UPDATE `message` SET `data` =" + newMessage+ " WHERE `id` =" + id + ";"; //o al posto di id mettere message.getId();
-            message = g.fromJson(body, Message.class);
-            PreparedStatement s1 = connection.prepareStatement(query);
-            int r = s1.executeUpdate(query);
-            
-            
-            //DatabaseManager.getInstance().setLog(log);
-        } catch (SQLException ex) {
-            Logger.getLogger(MessageResource.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        
+        //Codice hibernate per il salvataggio
+        session.beginTransaction();
+        Message message = (Message) session.get(Message.class, id);
+        message = entity;
+        
+        session.getTransaction().commit();
+
+        //deallochiamo le risorse
+        session.close();
+        sessionFactory.close();
         
         return Response.ok(message).build();
-    }*/
+    }
 
     @DELETE
     @Path("{id}")
@@ -149,11 +138,24 @@ public class MessageResource{
         return Response.ok(ret).build();
     }
 
-    /*@GET
+    @GET
     @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Message> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }*/
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+        Gson gson = new Gson();
+        
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        
+        //Codice hibernate per la select *
+        List<Message> messages = (List<Message>) session.createQuery("from Message where id > :fromId and id < :toId").setParameter("fromId", from).setParameter("toId", to).list();
+
+        //deallochiamo le risorse
+        session.close();
+        sessionFactory.close();
+        
+        String ret = gson.toJson(messages);
+        return Response.ok(ret).build();
+    }
     
 }

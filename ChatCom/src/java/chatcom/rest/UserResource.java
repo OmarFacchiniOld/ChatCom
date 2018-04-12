@@ -8,15 +8,7 @@ package chatcom.rest;
 import chatcom.hibernateutil.HibernateUtil;
 import chatcom.model.User;
 import com.google.gson.Gson;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -61,31 +53,27 @@ public class UserResource{
         return Response.ok().build();
     }
 
-    /*@PUT
+    @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response edit(@PathParam("id") Integer id) {         // vedere cosa verrà utilizzato per l'autenticazione e di conseguenza cosa l'user potrà modificare
+    public Response edit(@PathParam("id") Integer id, User entity) {     
         
-        try {
-            Gson g = new Gson();
-            
-            String newUsername = "";  //inserire codice che prenda il nuovo nome della chat che verra modificato nella parte grafica e lo metta nella stringa
-            
-            
-            String query = "UPDATE `user` SET `nickname` =" + newUsername+ " WHERE `id` =" + id + ";"; //o al posto di id mettere message.getId();   al momento l'user può modificare il nickname
-            //message = g.fromJson(body, Message.class);
-            PreparedStatement s1 = connection.prepareStatement(query);
-            int r = s1.executeUpdate(query);
-            
-            
-            //DatabaseManager.getInstance().setLog(log);
-        } catch (SQLException ex) {
-            Logger.getLogger(MessageResource.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        
+        //Codice hibernate per il salvataggio
+        session.beginTransaction();
+        User user = (User) session.get(User.class, id);
+        user = entity;
+        
+        session.getTransaction().commit();
+
+        //deallochiamo le risorse
+        session.close();
+        sessionFactory.close();
         
         return Response.ok().build();
-        
-    }*/
+    }
 
     @DELETE
     @Path("{id}")

@@ -8,15 +8,7 @@ package chatcom.rest;
 import chatcom.hibernateutil.HibernateUtil;
 import chatcom.model.Chatgroup;
 import com.google.gson.Gson;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -61,30 +53,27 @@ public class ChatgroupResource{
         return Response.ok().build();
     }
 
-    /*@PUT
+    @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response edit(@PathParam("id") Integer id) {
+    public Response edit(@PathParam("id") Integer id, Chatgroup entity) {
         
-        try {
-            Gson g = new Gson();
-            
-            String newGroupName = "";  //inserire codice che prenda il nuovo nome della chat che verra modificato nella parte grafica e lo metta nella stringa
-            
-            
-            String query = "UPDATE `chatgroup` SET `name` =" + newGroupName+ " WHERE `id` =" + id + ";"; //o al posto di id mettere message.getId();
-            //message = g.fromJson(body, Message.class);
-            PreparedStatement s1 = connection.prepareStatement(query);
-            int r = s1.executeUpdate(query);
-            
-            
-            //DatabaseManager.getInstance().setLog(log);
-        } catch (SQLException ex) {
-            Logger.getLogger(MessageFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        
+        //Codice hibernate per il salvataggio
+        session.beginTransaction();
+        Chatgroup chatGroup = (Chatgroup) session.get(Chatgroup.class, id);
+        chatGroup = entity;
+        
+        session.getTransaction().commit();
+
+        //deallochiamo le risorse
+        session.close();
+        sessionFactory.close();
         
         return Response.ok().build();
-    }*/
+    }
 
     @DELETE
     @Path("{id}")

@@ -8,9 +8,6 @@ package chatcom.rest;
 import chatcom.hibernateutil.HibernateUtil;
 import chatcom.model.Instance;
 import java.util.List;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -55,12 +52,26 @@ public class InstanceResource{
         return Response.ok().build();
     }
 
-    /*@PUT
+    @PUT
     @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Integer id, Instance entity) {
-        super.edit(entity);
-    }*/
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response edit(@PathParam("id") Integer id, Instance entity) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        
+        //Codice hibernate per il salvataggio
+        session.beginTransaction();
+        Instance instance = (Instance) session.get(Instance.class, id);
+        instance = entity;
+        
+        session.getTransaction().commit();
+
+        //deallochiamo le risorse
+        session.close();
+        sessionFactory.close();
+    
+        return Response.ok().build();
+    }
 
     @DELETE
     @Path("{id}")
