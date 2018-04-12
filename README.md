@@ -33,3 +33,11 @@ ______________________________________________
 -Uberti Davide: sviluppo server(hibernate).
 
 -Libri Demetrio: user stories.
+
+______________________________________________
+
+#Needed libraries can be downloaded here: 
+
+https://drive.google.com/open?id=1bZI6_0EFMKIGQTPxa8jWH9R0QDh1sB34
+
+Once you downloaded the folder you'll have to copy it in: * ..\ChatCom\ChatCom\ChatCom * overriding the lib folder already existing 
