@@ -34,26 +34,17 @@ import org.hibernate.SessionFactory;
  *
  * @author Uberti Davide
  */
-@Stateless
-@Path("chatcom.model.message")
-public class MessageFacadeREST extends AbstractFacade<Message> {
 
-    @PersistenceContext(unitName = "")
-    private EntityManager em;
-    private Connection connection;
-
-    public MessageFacadeREST() {
-        super(Message.class);
-    }
+@Path("message")
+public class MessageResource{
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createMessage(String body) {
+    public Response create(String body) {
         Gson gson = new Gson();
         
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
-        
         
         Message message = gson.fromJson(body, Message.class);
         
@@ -66,10 +57,10 @@ public class MessageFacadeREST extends AbstractFacade<Message> {
         session.close();
         sessionFactory.close();
         
-        return Response.ok(message).build();
+        return Response.ok().build();
     }
 
-    @PUT
+    /*@PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response edit(@PathParam("id") Integer id, Message message, String body) {
@@ -88,7 +79,7 @@ public class MessageFacadeREST extends AbstractFacade<Message> {
             
             //DatabaseManager.getInstance().setLog(log);
         } catch (SQLException ex) {
-            Logger.getLogger(MessageFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MessageResource.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return Response.ok(message).build();
@@ -107,44 +98,62 @@ public class MessageFacadeREST extends AbstractFacade<Message> {
             
             
         } catch (SQLException ex) {
-            Logger.getLogger(MessageFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MessageResource.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return Response.ok().build();
         
-    }
+    }*/
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Message find(@PathParam("id") Integer id) {
-        return super.find(id);
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response find(@PathParam("id") Integer id) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        
+        //Codice hibernate per il salvataggio
+        session.beginTransaction();
+        Message message = (Message) session.get(Message.class, id);
+        session.getTransaction().commit();
+
+        //deallochiamo le risorse
+        session.close();
+        sessionFactory.close();
+        
+        Gson gson = new Gson();
+        
+        if (message==null)
+            return Response.status(Response.Status.NOT_FOUND).build();
+          
+        String ret = gson.toJson(message);
+        return Response.ok(ret).build();
     }
 
     @GET
-    @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Message> findAll() {
-        return super.findAll();
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findAll() {
+        Gson gson = new Gson();
+        
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        
+        //Codice hibernate per la select *
+        List<Message> messages = (List<Message>) session.createQuery("from Message").list();
+
+        //deallochiamo le risorse
+        session.close();
+        sessionFactory.close();
+        
+        String ret = gson.toJson(messages);
+        return Response.ok(ret).build();
     }
 
-    @GET
+    /*@GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Message> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
-    }
-
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
+    }*/
     
 }

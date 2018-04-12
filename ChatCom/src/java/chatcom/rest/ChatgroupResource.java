@@ -34,17 +34,9 @@ import org.hibernate.SessionFactory;
  *
  * @author Uberti Davide
  */
-@Stateless
-@Path("chatcom.model.chatgroup")
-public class ChatgroupFacadeREST extends AbstractFacade<Chatgroup> {
 
-    @PersistenceContext(unitName = "")
-    private EntityManager em;
-    private Connection connection;
-
-    public ChatgroupFacadeREST() {
-        super(Chatgroup.class);
-    }
+@Path("chatgroup")
+public class ChatgroupResource{
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -54,7 +46,6 @@ public class ChatgroupFacadeREST extends AbstractFacade<Chatgroup> {
         
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
-        
         
         Chatgroup chatGroup = gson.fromJson(body, Chatgroup.class);
         
@@ -67,11 +58,10 @@ public class ChatgroupFacadeREST extends AbstractFacade<Chatgroup> {
         session.close();
         sessionFactory.close();
         
-        return Response.ok(chatGroup).build();
-        
+        return Response.ok().build();
     }
 
-    @PUT
+    /*@PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response edit(@PathParam("id") Integer id) {
@@ -100,39 +90,50 @@ public class ChatgroupFacadeREST extends AbstractFacade<Chatgroup> {
     @Path("{id}")
     public void remove(@PathParam("id") Integer id) {
         super.remove(super.find(id));
-    }
+    }*/
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Chatgroup find(@PathParam("id") Integer id) {
-        return super.find(id);
+    public Response find(@PathParam("id") Integer id) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        
+        //Codice hibernate per il salvataggio
+        session.beginTransaction();
+        Chatgroup chatGroup = (Chatgroup) session.get(Chatgroup.class, id);
+        session.getTransaction().commit();
+
+        //deallochiamo le risorse
+        session.close();
+        sessionFactory.close();
+        
+        Gson gson = new Gson();
+        
+        if (chatGroup==null)
+            return Response.status(Response.Status.NOT_FOUND).build();
+          
+        String ret = gson.toJson(chatGroup);
+        return Response.ok(ret).build();
     }
 
     @GET
-    @Override
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Chatgroup> findAll() {
-        return super.findAll();
-    }
+    public Response findAll() {
+        Gson gson = new Gson();
+        
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        
+        //Codice hibernate per la select *
+        List<Chatgroup> chatGroups = (List<Chatgroup>) session.createQuery("from Chatgroup").list();
 
-    @GET
-    @Path("{from}/{to}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Chatgroup> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
-
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+        //deallochiamo le risorse
+        session.close();
+        sessionFactory.close();
+        
+        String ret = gson.toJson(chatGroups);
+        return Response.ok(ret).build();
     }
     
 }
