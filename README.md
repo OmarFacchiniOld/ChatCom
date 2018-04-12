@@ -40,4 +40,4 @@ ______________________________________________
 
 https://drive.google.com/open?id=1bZI6_0EFMKIGQTPxa8jWH9R0QDh1sB34
 
-Once you downloaded the folder you'll have to copy it in: * ..\ChatCom\ChatCom\ChatCom * overriding the lib folder already existing 
+Once you downloaded the folder you'll have to copy it in: **..\ChatCom\ChatCom\ChatCom** overriding the lib folder already existing 
