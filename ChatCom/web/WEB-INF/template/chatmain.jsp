@@ -79,8 +79,8 @@
       </div>
         <form action="#" method="POST"> 
             <div class="modal-body">
-                <input type="text" class="form-control" placeholder="Insert username" name="username"><br />
-                <input type="password" class="form-control" placeholder="Insert password" name="password"><br />
+                <input type="text" class="form-control" placeholder="Insert name of chat" name="chatname"><br />
+                <input type="password" class="form-control" placeholder="Insert" name=""><br />
             </div>
             <div class="modal-footer">
                 <input type="submit" class="btn btn-sm btn-outline-success" value="Create">
