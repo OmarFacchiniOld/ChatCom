@@ -24,7 +24,7 @@ Package contenete tutte le classi utilizzate per effettuare le chiamate REST.
 
 ______________________________________________
 
-Group members and tasks allocation:
+# Group members and tasks allocation:
 
 -Abate Simone: sviluppo client e grafica dell'applicazione.
 
