@@ -26,13 +26,13 @@ ______________________________________________
 
 # Group members and tasks allocation:
 
--Abate Simone: sviluppo client e grafica dell'applicazione.
+- Abate Simone: sviluppo client e grafica dell'applicazione.
 
--Facchini Omar: sviluppo chiamate REST.
+- Facchini Omar: sviluppo chiamate REST.
 
--Uberti Davide: sviluppo server(hibernate).
+- Uberti Davide: sviluppo server(hibernate).
 
--Libri Demetrio: user stories.
+- Libri Demetrio: user stories.
 
 ______________________________________________
 
