@@ -41,7 +41,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-        <form id="register" action="http://localhost:3306/chatcom.model.user" method="POST"> 
+        <form id="register" action="http://localhost:8080/api/user" method="POST"> 
             <div class="modal-body">
                 <input id="first" type="text" class="form-control" placeholder="Insert first name" name="firstname"><br />
                 <input id="last" type="text" class="form-control" placeholder="Insert last name" name="lastname"><br />
