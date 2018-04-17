@@ -16,7 +16,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-        <form action="#" method="POST"> 
+        <form action="${pageContext.request.contextPath}/login" method="post"> 
             <div class="modal-body">
                 <input type="text" class="form-control" placeholder="Insert username" name="username"><br />
                 <input type="password" class="form-control" placeholder="Insert password" name="password"><br />

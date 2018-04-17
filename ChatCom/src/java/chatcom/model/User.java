@@ -32,23 +32,26 @@ public class User  implements java.io.Serializable {
      private String email;
      private String firstname;
      private String lastname;
+     private String password;
      private Set<Instance> instances = new HashSet<Instance>(0);
 
     public User() {
     }
 
 	
-    public User(String nickname, String email, String firstname, String lastname) {
+    public User(String nickname, String email, String firstname, String lastname, String password) {
         this.nickname = nickname;
         this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.password = password;
     }
-    public User(String nickname, String email, String firstname, String lastname, Set<Instance> instances) {
+    public User(String nickname, String email, String firstname, String lastname, String password, Set<Instance> instances) {
        this.nickname = nickname;
        this.email = email;
        this.firstname = firstname;
        this.lastname = lastname;
+       this.password = password;
        this.instances = instances;
     }
    
@@ -113,9 +116,15 @@ public class User  implements java.io.Serializable {
         this.instances = instances;
     }
 
+    @Column(name="password", nullable=false, length=200)
+    public String getPassword() {
+        return this.password;
+    }
 
-
-
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
 }
 
 

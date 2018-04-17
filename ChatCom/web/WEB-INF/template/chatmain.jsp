@@ -20,7 +20,9 @@
         <div class="col-1">
             <div id="mastercard" class="card">
                             <div class="card-header">
-                                <button id='Logoutbtn' class="btn btn-sm btn-outline-success">Logout</button>
+                                <form method="get" action="${pageContext.request.contextPath}/logout">
+                                    <button id="Logoutbtn" type="submit" class="btn btn-sm btn-outline-success">Logout ${user}</button>
+                                </form>    
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">Create new chat</h5>
