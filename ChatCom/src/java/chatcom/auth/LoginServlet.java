@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package chatcom.login;
+package chatcom.auth;
 
 import chatcom.hibernateutil.HibernateUtil;
 import chatcom.model.User;
