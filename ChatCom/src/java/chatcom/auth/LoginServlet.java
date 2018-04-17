@@ -71,12 +71,17 @@ public class LoginServlet extends HttpServlet {
                     currentSession.setMaxInactiveInterval(5*60);//5 minuti di inattività massima
                     
                     response.sendRedirect("chat.jsp");
+                }else{
+                    response.sendRedirect("index.jsp");
                 }
+                
+            }else{
+                response.sendRedirect("index.jsp");
             }
             
+        }else{
+            response.sendRedirect("index.jsp");
         }
-        
-        response.sendRedirect("index.jsp");
         
     }
 
