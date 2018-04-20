@@ -6,7 +6,7 @@
         <init-param>
             <description>Multiple packages, separated by semicolon(;), can be specified in param-value</description>
             <param-name>com.sun.jersey.config.property.packages</param-name>
-            <param-value>chatcom.rest</param-value>
+            <param-value>chatcom.rest.service</param-value>
         </init-param>
         <init-param>
             <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
@@ -16,7 +16,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ServletAdaptor</servlet-name>
-        <url-pattern>/api/*</url-pattern>
+        <url-pattern>/webresources/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
