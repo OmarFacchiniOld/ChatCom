@@ -41,12 +41,17 @@ Contributor(s):
 -->
 <hibernate-configuration>
   <session-factory>
-    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/chatcom?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.hbm2ddl.auto">validate</property>
+    <property name="hibernate.connection.password"/>
+    <property name="hibernate.connection.pool_size">1</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <property name="hibernate.cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
     <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.hbm2ddl.auto">update</property>
+    <property name="hibernate.transaction.auto_close_session">true</property>
     <mapping class="chatcom.model.User"/>
     <mapping class="chatcom.model.Chatgroup"/>
     <mapping class="chatcom.model.Message"/>

@@ -41,8 +41,7 @@ public class LoginServlet extends HttpServlet {
         String paramPassword = request.getParameter("password");
         
         if(!paramUsername.trim().isEmpty() && !paramPassword.trim().isEmpty()){
-            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-            Session session = sessionFactory.openSession();
+            Session session = HibernateUtil.getSessionFactory().openSession();
 
             //Codice hibernate per il salvataggio
             session.beginTransaction();
@@ -50,10 +49,6 @@ public class LoginServlet extends HttpServlet {
             List<User> users = (List<User>) session.createQuery("from User where nickname = :nickname and password = :password").setParameter("nickname", paramUsername).setParameter("password", paramPassword).list();
 
             session.getTransaction().commit();
-
-            //deallochiamo le risorse
-            session.close();
-            sessionFactory.close();
             
             if(users.size() == 1){
                 User user = users.get(0);

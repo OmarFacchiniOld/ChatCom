@@ -21,7 +21,7 @@
             <div id="mastercard" class="card">
                             <div class="card-header">
                                 <form method="get" action="${pageContext.request.contextPath}/logout">
-                                    <button id="Logoutbtn" type="submit" class="btn btn-sm btn-outline-success">Logout ${user}</button>
+                                    <button id="Logoutbtn" type="submit" class="btn btn-sm btn-outline-success">Logout ${user.nickname}</button>
                                 </form>    
                             </div>
                             <div class="card-body">

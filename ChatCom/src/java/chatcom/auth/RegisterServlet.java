@@ -50,8 +50,7 @@ public class RegisterServlet extends HttpServlet {
                 && paramPassword.trim().equals(paramConfirmPassword.trim())){
             
             //TODO: Opportune verifiche tipo se esiste gia il nickname o l' email criptazione password?
-            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-            Session session = sessionFactory.openSession();
+            Session session = HibernateUtil.getSessionFactory().openSession();
 
             User user = new User();
             user.setFirstname(paramFirstname);
@@ -64,10 +63,6 @@ public class RegisterServlet extends HttpServlet {
             session.beginTransaction();
             session.save(user);
             session.getTransaction().commit();
-
-            //deallochiamo le risorse
-            session.close();
-            sessionFactory.close();
             
         }
         
