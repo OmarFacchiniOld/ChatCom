@@ -38,6 +38,6 @@ ______________________________________________
 
 # Needed libraries can be downloaded here: 
 
-https://drive.google.com/open?id=1bZI6_0EFMKIGQTPxa8jWH9R0QDh1sB34
+https://drive.google.com/open?id=1dGRF3OXGVklgRSJSG0IDZrpZ_qG07rS0
 
-Once you downloaded the folder you'll have to copy it in: **..\ChatCom\ChatCom\ChatCom** overriding the lib folder already existing 
+Once you downloaded the folder you'll have to unzip the file and copy it in: **..\ChatCom\ChatCom\ChatCom** overriding the lib folder already existing 
