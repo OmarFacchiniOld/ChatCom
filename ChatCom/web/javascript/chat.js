@@ -6,7 +6,7 @@
 
 
 
-var rootURL = "https://jsonplaceholder.typicode.com/posts";
+//var rootURL = "https://jsonplaceholder.typicode.com/posts";
 
 
 
@@ -37,7 +37,7 @@ function getAllMessages(){
             contentType: 'application/json; charset=utf-8',
             success: function(data) {
                         $.each(data, function (index, data){
-                           if(data.id % 2 == 0)
+                           if(data.id % 2 == 0)  //invece di utilizzare l'id fare tipo data.username == sessione.username
                                dxtext(data.title,data.body);
                            else
                                sxtext(data.title,data.body);
@@ -48,7 +48,9 @@ function getAllMessages(){
 }
 
 
-function sxtext(name, text){
+//pensavo di aggiungere qua e sul dxtext la stampa del message o fare un getMessage che creera una string
+// da passare come parametro qua
+function sxtext(name, text){ 
     $('#start').append('<div class="row"><div class="col-3"></div><div class="col-2"><div class="card message"><div class="card-header"><h6 class="card-title">'+name+'</h6></div><div class="card-body"><p class="card-text">'+text+'</p></div></div></div><div class="col-7"></div></div>');
 }
 
