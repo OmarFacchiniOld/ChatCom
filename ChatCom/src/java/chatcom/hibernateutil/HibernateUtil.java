@@ -5,7 +5,7 @@
  */
 package chatcom.hibernateutil;
 
-import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -25,13 +25,13 @@ public class HibernateUtil {
         try {
             // Create the SessionFactory from standard (hibernate.cfg.xml) 
             // config file.
-            Configuration cfg = new Configuration().configure("hibernate.cfg.xml");        	
-            StandardServiceRegistryBuilder sb = new StandardServiceRegistryBuilder();
-            sb.applySettings(cfg.getProperties());
-            StandardServiceRegistry standardServiceRegistry = sb.build();           	
-            sessionFactory = cfg.buildSessionFactory(standardServiceRegistry);
             
-        } catch (Throwable ex) {
+            Configuration configuration = new Configuration().configure();
+            StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().
+            applySettings(configuration.getProperties());
+            sessionFactory = configuration.buildSessionFactory(builder.build());
+            
+        } catch (HibernateException ex) {
             // Log the exception. 
             System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
