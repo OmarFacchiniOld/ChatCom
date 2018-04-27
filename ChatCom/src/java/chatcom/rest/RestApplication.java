@@ -14,7 +14,7 @@ import javax.ws.rs.core.Application;
  *
  * @author Uberti Davide <ubertidavide@gmail.com>
  */
-@ApplicationPath("/api")
+@ApplicationPath("api")
 public class RestApplication extends Application{
 
     @Override
