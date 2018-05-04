@@ -86,8 +86,28 @@ public class InstanceResource {
         
         return Response.ok().build();
     }
-
+    
     @GET
+    @Path("{userid}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response find(@PathParam("userid") Integer id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        
+        //Codice hibernate per il salvataggio
+        session.beginTransaction();
+        List<Instance> instance = (List<Instance>) session.createQuery("from Instance where id_user =:userid ").setParameter(":userid", id).list();
+        session.getTransaction().commit();
+        
+        Gson gson = new Gson();
+        
+        if (instance==null)
+            return Response.status(Response.Status.NOT_FOUND).build();
+          
+        String ret = gson.toJson(instance);
+        return Response.ok(ret).build();
+    }
+
+    /*@GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response find(@PathParam("id") Integer id) {
@@ -105,7 +125,7 @@ public class InstanceResource {
           
         String ret = gson.toJson(instance);
         return Response.ok(ret).build();
-    }
+    }*/
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

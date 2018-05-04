@@ -39,8 +39,6 @@ public class Instance  implements java.io.Serializable {
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
-
-    
     @Column(name="id", unique=true, nullable=false)
     public Integer getId() {
         return this.id;

@@ -44,16 +44,20 @@ public class MessageResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(String body) {
         Gson gson = new Gson();
+
+        System.out.println("==================================================");
+        System.out.println(body);
+        System.out.println("==================================================");
         
         Session session = HibernateUtil.getSessionFactory().openSession();
-        
+
         Message message = gson.fromJson(body, Message.class);
-        
+
         //Codice hibernate per il salvataggio
         session.beginTransaction();
         session.save(message);
         session.getTransaction().commit();
-        
+
         return Response.ok().build();
     }
 
@@ -61,32 +65,32 @@ public class MessageResource {
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response edit(@PathParam("id") Integer id, Message entity) {
-        
+
         Session session = HibernateUtil.getSessionFactory().openSession();
-        
+
         //Codice hibernate per il salvataggio
         session.beginTransaction();
         Message message = (Message) session.get(Message.class, id);
         message = entity;
-        
+
         session.getTransaction().commit();
-        
+
         return Response.ok(message).build();
     }
 
     @DELETE
     @Path("{id}")
     public Response remove(@PathParam("id") Integer id) {
-        
+
         Session session = HibernateUtil.getSessionFactory().openSession();
-        
+
         //Codice hibernate per il salvataggio
         session.beginTransaction();
         Message message = (Message) session.get(Message.class, id);
         session.delete(message);
         session.getTransaction().commit();
-        
-        return Response.ok().build();   
+
+        return Response.ok().build();
     }
 
     @GET
@@ -94,17 +98,18 @@ public class MessageResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response find(@PathParam("id") Integer id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        
+
         //Codice hibernate per il salvataggio
         session.beginTransaction();
         Message message = (Message) session.get(Message.class, id);
         session.getTransaction().commit();
-        
+
         Gson gson = new Gson();
-        
-        if (message==null)
+
+        if (message == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
-          
+        }
+
         String ret = gson.toJson(message);
         return Response.ok(ret).build();
     }
@@ -113,12 +118,12 @@ public class MessageResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         Gson gson = new Gson();
-        
+
         Session session = HibernateUtil.getSessionFactory().openSession();
-        
+
         //Codice hibernate per la select *
         List<Message> messages = (List<Message>) session.createQuery("from Message").list();
-        
+
         String ret = gson.toJson(messages);
         return Response.ok(ret).build();
     }
@@ -128,14 +133,14 @@ public class MessageResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         Gson gson = new Gson();
-        
+
         Session session = HibernateUtil.getSessionFactory().openSession();
-        
+
         //Codice hibernate per la select *
         List<Message> messages = (List<Message>) session.createQuery("from Message where id > :fromId and id < :toId").setParameter("fromId", from).setParameter("toId", to).list();
-        
+
         String ret = gson.toJson(messages);
         return Response.ok(ret).build();
     }
-    
+
 }
