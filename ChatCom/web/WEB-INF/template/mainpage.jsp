@@ -102,7 +102,7 @@
             <div class="card up">
                 <img class="card-img-top" src="images/iot.jpeg" alt="Card image cap">
                 <div class="card-body lightpurple">
-                    <p class="card-text">Connect whit your account from every device</p>
+                    <p class="card-text">Connect with your account from every device</p>
                 </div>
             </div>
         </div>
@@ -110,8 +110,8 @@
             <div class="card up">
                 <img class="card-img-top" src="images/amaca.jpeg" alt="Card image cap">
                 <div class="card-body lightpurple">
-                    <div class="card-text">Relax</div>
-                    <div class="card-text">Chat and send media is easiest now</div>
+                    <!-- <div class="card-text">Relax</div> -->
+                    <div class="card-text">Chatting and sending media is easier than ever now</div>
                 </div>
             </div>
         </div>
@@ -119,7 +119,7 @@
             <div class="card up">
                 <img class="card-img-top" src="images/money.jpeg" alt="Card image cap">
                 <div class="card-body lightpurple">
-                    <p class="card-text">This service is totally free Enjoy the chat and share it</p>
+                    <p class="card-text">This service is totally free, Enjoy the chat and share it</p>
                 </div>
             </div>
         </div>
@@ -137,7 +137,7 @@
                 <img class="card-img" src="images/abate.jpg" alt="Card image">
                 <div class="card-img-overlay">
                     <h5 class="card-title">Abate Simone</h5>
-                    <p class="card-text">Client Side Design</p>
+                    <p class="card-text">Client Side and Design</p>
                 </div>
             </div>
         </div>
