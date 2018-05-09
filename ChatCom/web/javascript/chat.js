@@ -53,6 +53,8 @@ function getChat() {
                 else
                     sxtext(data.nickname, data.lastname);*/
                 addchat(data.nickname, data.lastname);
+                
+                //se necessario aggiungere una function.onclick che richiami getAllMessages();
             });
         }
 //                            success: function(data) {
