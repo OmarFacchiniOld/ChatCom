@@ -187,3 +187,25 @@ textarea{
 .modal-footer{
     background-color: #7B1FA2;
 }
+
+
+::-webkit-scrollbar {
+width: 12px;
+height: 12px;
+
+}
+
+::-webkit-scrollbar-track {
+border: 1px solid #7B1FA2;
+border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+background: #7B1FA2;
+border-radius: 10px;
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: #BA68C8;  
+}
