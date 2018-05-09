@@ -59,15 +59,23 @@ function getAllMessages() {
 //                           addchat(data.title,data.body);
 //                        });
 //            }
-        success: function (data) {
-            $.each(data, function (index, data) {
-                if (data.id % 2 == 0)  //invece di utilizzare l'id fare tipo data.username == sessione.username
-                    dxtext(data.nickname, data.lastname);
-                else
-                    sxtext(data.nickname, data.lastname);
-                addchat(data.nickname, data.lastname);
-            });
-        }
+//        success: function (data) {
+//            $.each(data, function (index, data) {
+//                if (data.id % 2 == 0)  //invece di utilizzare l'id fare tipo data.username == sessione.username
+//                    dxtext(data.nickname, data.lastname);
+//                else
+//                    sxtext(data.nickname, data.lastname);
+//                addchat(data.nickname, data.lastname);
+//            });
+//        }
+                            success: function(data) {
+                        $.each(data, function (index, data){
+                            addchat(data.nickname,data.lastname,index);
+                           $("#chat"+index).click(function() {
+                                alert(data.nickname);
+                            });
+                        });
+                    }
     });
 }
 
@@ -82,7 +90,7 @@ function dxtext(name, text) {
     $('#start').append('<div class="row"><div class="col-7"></div><div class="col-2"><div class="card message"><div class="card-header"><h6 class="card-title">' + name + '</h6></div><div class="card-body"><p class="card-text">' + text + '</p></div></div></div><div class="col-3"></div></div>');
 }
 
-function addchat(name, text, image, id) {
+function addchat(name, text, id) {
     $('#secondstart').append('<div id="chat'+id+'" class="card profilecard"><div class="card-header"><img class="profileimage" src="images/test.jpeg"></div><div class="card-body"><h5 class="card-title">' + name + '</h5><h6 class="card-subtitle mb-2 text-muted">' + text + '</h6></div></div>');
 }
 
@@ -90,11 +98,3 @@ function addchat(name, text, image, id) {
 
 
 
-//                    success: function(data) {
-//                        $.each(data, function (index, data){
-//                            addchat("nome","testo",index);
-//                           $( "#chat"+index ).click(function() {
-//                                cosa fa se clicchi
-//                            });
-//                        });
-//                    }
