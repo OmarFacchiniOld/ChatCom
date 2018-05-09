@@ -83,5 +83,18 @@ function dxtext(name, text) {
 }
 
 function addchat(name, text, image, id) {
-    $('#secondstart').append('<div class="card profilecard"><div class="card-header"><img class="profileimage" src="images/test.jpeg"></div><div class="card-body"><h5 class="card-title">' + name + '</h5><h6 class="card-subtitle mb-2 text-muted">' + text + '</h6></div></div>');
+    $('#secondstart').append('<div id="chat'+id+'" class="card profilecard"><div class="card-header"><img class="profileimage" src="images/test.jpeg"></div><div class="card-body"><h5 class="card-title">' + name + '</h5><h6 class="card-subtitle mb-2 text-muted">' + text + '</h6></div></div>');
 }
+
+
+
+
+
+//                    success: function(data) {
+//                        $.each(data, function (index, data){
+//                            addchat("nome","testo",index);
+//                           $( "#chat"+index ).click(function() {
+//                                cosa fa se clicchi
+//                            });
+//                        });
+//                    }
