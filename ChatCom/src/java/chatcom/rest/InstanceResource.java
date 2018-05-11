@@ -25,6 +25,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 
 /**
@@ -91,7 +92,7 @@ public class InstanceResource {
         return Response.ok().build();
     }
     
-    @GET
+    /*@GET
     @Path("{userid}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response find(@PathParam("userid") Integer id) {
@@ -109,27 +110,37 @@ public class InstanceResource {
           
         String ret = gson.toJson(instance);
         return Response.ok(ret).build();
-    }
+    }*/
 
-    /*@GET
+    @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response find(@PathParam("id") Integer id) {
+        
+        Gson gson = new /*Gson();*/GsonBuilder()
+        .registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY)
+        .create();
+        
         Session session = HibernateUtil.getSessionFactory().openSession();
+        
         
         //Codice hibernate per il salvataggio
         session.beginTransaction();
         Instance instance = (Instance) session.get(Instance.class, id);
+        Hibernate.initialize(instance.getChatgroup());
+        Hibernate.initialize(instance.getMessage());
+        Hibernate.initialize(instance.getUser());
         session.getTransaction().commit();
         
-        Gson gson = new Gson();
+        Type type = new TypeToken<Instance>() {}.getType();
+        
         
         if (instance==null)
             return Response.status(Response.Status.NOT_FOUND).build();
           
         String ret = gson.toJson(instance);
         return Response.ok(ret).build();
-    }*/
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
