@@ -5,9 +5,13 @@
  */
 package chatcom.rest;
 
+import chatcom.hibernateutil.HibernateProxyTypeAdapter;
 import chatcom.hibernateutil.HibernateUtil;
 import chatcom.model.Instance;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -130,14 +134,16 @@ public class InstanceResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
-        Gson gson = new Gson();
+        Gson gson = /*new Gson();*/new GsonBuilder()
+        .registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY)
+        .create();
         
         Session session = HibernateUtil.getSessionFactory().openSession();
         
         //Codice hibernate per la select *
         List<Instance> instances = (List<Instance>) session.createQuery("from Instance").list();
-        
-        String ret = gson.toJson(instances);
+        Type listType = new TypeToken<List<Instance>>() {}.getType();
+        String ret = gson.toJson(instances,listType);
         return Response.ok(ret).build();
     }
     

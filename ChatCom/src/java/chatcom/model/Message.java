@@ -28,7 +28,7 @@ public class Message  implements java.io.Serializable {
      private Integer id;
      private String data;
      private String type;
-     private Set<Instance> instances = new HashSet<Instance>(0);
+    // private Set<Instance> instances = new HashSet<Instance>(0);
 
     public Message() {
     }
@@ -38,11 +38,11 @@ public class Message  implements java.io.Serializable {
         this.data = data;
         this.type = type;
     }
-    public Message(String data, String type, Set<Instance> instances) {
+    /*public Message(String data, String type, Set<Instance> instances) {
        this.data = data;
        this.type = type;
        this.instances = instances;
-    }
+    }*/
    
      @Id @GeneratedValue(strategy=IDENTITY)
 
@@ -76,14 +76,14 @@ public class Message  implements java.io.Serializable {
         this.type = type;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="message")
+/*@OneToMany(fetch=FetchType.LAZY, mappedBy="message")
     public Set<Instance> getInstances() {
         return this.instances;
     }
     
     public void setInstances(Set<Instance> instances) {
         this.instances = instances;
-    }
+    }*/
 
 
 

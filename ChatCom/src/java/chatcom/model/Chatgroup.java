@@ -31,7 +31,7 @@ public class Chatgroup  implements java.io.Serializable {
      private String name;
      private Date dateEnd;
      private Date dateStart;
-     private Set<Instance> instances = new HashSet<Instance>(0);
+     //private Set<Instance> instances = new HashSet<Instance>(0);
 
     public Chatgroup() {
     }
@@ -42,12 +42,13 @@ public class Chatgroup  implements java.io.Serializable {
         this.dateStart = dateStart;
     }
     
-    public Chatgroup(String name, Date dateEnd, Date dateStart, Set<Instance> instances) {
+    /*public Chatgroup(String name, Date dateEnd, Date dateStart, Set<Instance> instances) {
        this.name = name;
        this.dateEnd = dateEnd;
        this.dateStart = dateStart;
        this.instances = instances;
-    }
+    }*/
+    
    
      @Id @GeneratedValue(strategy=IDENTITY)
    
@@ -90,14 +91,14 @@ public class Chatgroup  implements java.io.Serializable {
         this.dateStart = dateStart;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="chatgroup")
+/*@OneToMany(fetch=FetchType.LAZY, mappedBy="chatgroup")
     public Set<Instance> getInstances() {
         return this.instances;
     }
     
     public void setInstances(Set<Instance> instances) {
         this.instances = instances;
-    }
+    }*/
 
 
 

@@ -33,7 +33,7 @@ public class User  implements java.io.Serializable {
      private String firstname;
      private String lastname;
      private String password;
-     private Set<Instance> instances = new HashSet<Instance>(0);
+     //private Set<Instance> instances = new HashSet<Instance>(0);
 
     public User() {
     }
@@ -46,14 +46,14 @@ public class User  implements java.io.Serializable {
         this.lastname = lastname;
         this.password = password;
     }
-    public User(String nickname, String email, String firstname, String lastname, String password, Set<Instance> instances) {
+   /* public User(String nickname, String email, String firstname, String lastname, String password, Set<Instance> instances) {
        this.nickname = nickname;
        this.email = email;
        this.firstname = firstname;
        this.lastname = lastname;
        this.password = password;
        this.instances = instances;
-    }
+    }*/
    
      @Id @GeneratedValue(strategy=IDENTITY)
 
@@ -107,14 +107,14 @@ public class User  implements java.io.Serializable {
         this.lastname = lastname;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="user")
+/*@OneToMany(fetch=FetchType.LAZY, mappedBy="user")
     public Set<Instance> getInstances() {
         return this.instances;
     }
     
     public void setInstances(Set<Instance> instances) {
         this.instances = instances;
-    }
+    }*/
 
     @Column(name="password", nullable=false, length=200)
     public String getPassword() {
