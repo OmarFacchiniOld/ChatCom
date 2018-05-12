@@ -27,6 +27,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  * REST Web Service
@@ -126,7 +127,7 @@ public class InstanceResource {
         
         //Codice hibernate per il salvataggio
         session.beginTransaction();
-        Instance instance = (Instance) session.get(Instance.class, id);
+        Instance instance = (Instance) session.createQuery("from Instance as insta where insta.user.id = 3").list();
         Hibernate.initialize(instance.getChatgroup());
         Hibernate.initialize(instance.getMessage());
         Hibernate.initialize(instance.getUser());

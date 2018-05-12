@@ -5,11 +5,7 @@
  */
 
 
-//var rootURL = "https://jsonplaceholder.typicode.com/posts";
-var rootURL = "http://localhost:8080/ChatCom/api/user";
 
-
-// gestisce il controllo della password
 $("#sendregister").click(function() {
             if($("#pass").val() != $("#pass2").val()){
                 alert("Passwords not equal");
