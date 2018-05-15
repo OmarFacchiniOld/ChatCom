@@ -2,6 +2,7 @@ package chatcom.model;
 // Generated 17-mar-2018 13.20.00 by Hibernate Tools 4.3.1
 
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -48,7 +49,7 @@ public class Instance  implements java.io.Serializable {
         this.id = id;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="id_chatgroup", nullable=false)
     public Chatgroup getChatgroup() {
         return this.chatgroup;
@@ -58,7 +59,7 @@ public class Instance  implements java.io.Serializable {
         this.chatgroup = chatgroup;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="id_message", nullable=false)
     public Message getMessage() {
         return this.message;
@@ -68,7 +69,7 @@ public class Instance  implements java.io.Serializable {
         this.message = message;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="id_user", nullable=false)
     public User getUser() {
         return this.user;

@@ -26,6 +26,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -114,9 +115,9 @@ public class InstanceResource {
     }*/
 
     @GET
-    @Path("{id}")
+    @Path("{userid}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@PathParam("id") Integer id) {
+    public Response find(@PathParam("userid") Integer id) {
         
         Gson gson = new /*Gson();*/GsonBuilder()
         .registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY)
@@ -127,14 +128,22 @@ public class InstanceResource {
         
         //Codice hibernate per il salvataggio
         session.beginTransaction();
-        Instance instance = (Instance) session.createQuery("from Instance as insta where insta.user.id = 3").list();
+        Query query = session.createQuery("from Instance ins join fetch ins.user usr join fetch ins.chatgroup where usr.id = :userid");
+        query.setParameter("userid", id);
+        List<Instance> instances = (List<Instance>) query.list();
+        
+        if(instances.size() <= 0)
+            return Response.status(Response.Status.NOT_FOUND).build();
+        
+        Instance instance = instances.get(0);
+        
         Hibernate.initialize(instance.getChatgroup());
         Hibernate.initialize(instance.getMessage());
         Hibernate.initialize(instance.getUser());
+        
         session.getTransaction().commit();
         
         Type type = new TypeToken<Instance>() {}.getType();
-        
         
         if (instance==null)
             return Response.status(Response.Status.NOT_FOUND).build();

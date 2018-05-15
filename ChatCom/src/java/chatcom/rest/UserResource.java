@@ -21,6 +21,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 
 /**
@@ -98,6 +99,7 @@ public class UserResource {
         //Codice hibernate per il salvataggio
         session.beginTransaction();
         User user = (User) session.get(User.class, id);
+        
         session.getTransaction().commit();
         
         Gson gson = new Gson();
