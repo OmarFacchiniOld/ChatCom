@@ -128,27 +128,17 @@ public class InstanceResource {
         
         //Codice hibernate per il salvataggio
         session.beginTransaction();
-        Query query = session.createQuery("from Instance ins join fetch ins.user usr join fetch ins.chatgroup where usr.id = :userid");
+        Query query = session.createQuery("select distinct ins from Instance ins join fetch ins.user usr join fetch ins.chatgroup join fetch ins.message msg where usr.id = :userid order by msg.id desc");
         query.setParameter("userid", id);
         List<Instance> instances = (List<Instance>) query.list();
-        
-        if(instances.size() <= 0)
-            return Response.status(Response.Status.NOT_FOUND).build();
-        
-        Instance instance = instances.get(0);
-        
-        Hibernate.initialize(instance.getChatgroup());
-        Hibernate.initialize(instance.getMessage());
-        Hibernate.initialize(instance.getUser());
-        
         session.getTransaction().commit();
         
-        Type type = new TypeToken<Instance>() {}.getType();
+        Type listtype = new TypeToken<List<Instance>>() {}.getType();
         
-        if (instance==null)
+        if (instances==null)
             return Response.status(Response.Status.NOT_FOUND).build();
           
-        String ret = gson.toJson(instance);
+        String ret = gson.toJson(instances, listtype);
         return Response.ok(ret).build();
     }
 
