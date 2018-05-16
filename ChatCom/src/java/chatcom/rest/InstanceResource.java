@@ -128,7 +128,7 @@ public class InstanceResource {
         
         //Codice hibernate per il salvataggio
         session.beginTransaction();
-        Query query = session.createQuery("from Instance ins join fetch ins.user usr join fetch ins.chatgroup chat join fetch ins.message msg where usr.id = :userid group by chat.id order by msg.id desc");
+        Query query = session.createQuery("from Instance ins join fetch ins.user usr join fetch ins.chatgroup chat join fetch ins.message msg where usr.id = :userid group by chat.id order by msg.id asc");
         query.setParameter("userid", id);
         List<Instance> instances = (List<Instance>) query.list();
         session.getTransaction().commit();
