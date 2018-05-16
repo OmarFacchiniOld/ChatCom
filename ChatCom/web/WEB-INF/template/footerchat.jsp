@@ -14,45 +14,100 @@
     
     <script>
 
-var rootURL = "http://localhost:8080/ChatCom/api/instance";
-var rootURLMessage = "http://localhost:8080/ChatCom/api/";
-var lastmsg = "";
+//var rootURLchat = "http://localhost:8080/ChatCom/api/instance?userid=";
+var rootURLsendmessage = "http://localhost:8080/ChatCom/api/message";
+var rootURLsendchatgroup = "http://localhost:8080/ChatCom/api/chatgroup";
+var rootURLsenduser = "http://localhost:8080/ChatCom/api/user";
+var rootURLsendinstance = "http://localhost:8080/ChatCom/api/instance";
+var lastmsg ="";
+var lastchat="";
+var myuser="";
 
 
+$('#messagesend').submit(false);
 
-
-getChat();
+//getChat();
 
 window.setInterval(function(){
   $('.profilecard').remove();
-  getChat();
+//  getChat();
 }, 5000);
 
 
-function getChat() {
-    $.ajax({
-        url: rootURL+'/'+${user.id},
-        type: "GET",
+$("#sendbutton").click(function() {
+    if($("#textarea").val() != ""){       
+        sendmessage();
+        $("#textarea").val("");
+    }
+});
 
-        contentType: 'application/json; charset=utf-8',
-
-                    success: function(data) {
-                        addchat(data.chatgroup.name,data.message.data,1);
+//function getChat() {
+//    $.ajax({
+//        url: rootURLchat+${user.id},
+//        type: "GET",
+//
+//        contentType: 'application/json; charset=utf-8',
+//
+//                    success: function(data) {
 //                        $.each(data, function (index, data){
 //                            addchat(data.chatgroup.name,data.message.data,index);
+//                            myuser = data.user;
 //                           $("#chat"+index).click(function() {
 //                               //getAllMessages(data.chatgroup.id)
+//                               lastchat= data.chatgroup;
 //                            });
 //                        });
-                    }
-    });
+//                    }
+//    });
+//}
+
+
+
+function sendmessage(){
+    var sendobj = new Object();
+    sendobj.data = $("#textarea").val();
+    sendobj.type = "";
+    var json= JSON.stringify(sendobj);
+    send(rootURLsendmessage,json);
 }
 
 
+function sendchatgroup(){
+    var sendobj = new Object();
+    sendobj. = $("#").val();
+    sendobj. = $("#").val();
+    sendobj. = $("#").val();
+    sendobj. = $("#").val();
+    var json= JSON.stringify(sendobj);
+    send(rootURLsendmessage,json);
+}
 
-//function getAllMessages(idchat){
+
+function sendinstance(){
+    var sendobj = new Object();
+    sendobj.id_user = myuser.id;
+    sendobj.id_chatgroup = lastchat.id;
+    sendobj.id_message = "";
+    var json= JSON.stringify(sendobj);
+    send(rootURLsendmessage,json);
+}
+
+
+function send(url, json){
+    $.ajax({
+    type: "POST",
+    contentType: 'application/json; charset=utf-8',
+    url: url,
+    data: json,
+    success: function() {
+                        
+                    },
+});
+}
+
+//function getAllMessages(){
 //    $.ajax({
-//        url: rootURLMessage+'/'+idchat,
+//        url: rootURLMessage+lastchat.chatgroup.id,
 //        type: "GET",
 //        
 //        contentType: 'application/json; charset=utf-8',

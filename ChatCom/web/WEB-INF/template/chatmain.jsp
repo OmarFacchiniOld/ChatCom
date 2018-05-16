@@ -46,7 +46,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-11">
-                                    <textarea rows="2" name="messagearea" placeholder="Type something..."></textarea>
+                                    <textarea id="textarea" rows="2" name="messagearea" placeholder="Type something..."></textarea>
                                 </div>
                                 <div class="col-1">
                                     <button id="sendbutton"></button>
