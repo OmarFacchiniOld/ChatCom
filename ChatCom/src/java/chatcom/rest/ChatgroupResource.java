@@ -55,7 +55,8 @@ public class ChatgroupResource {
         session.save(chatGroup);
         session.getTransaction().commit();
         
-        return Response.ok().build();
+        String resp = new Gson().toJson(chatGroup.getId());
+        return Response.ok(resp).build();
     }
 
     @PUT

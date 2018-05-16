@@ -58,7 +58,8 @@ public class MessageResource {
         session.save(message);
         session.getTransaction().commit();
 
-        return Response.ok().build();
+        String resp = new Gson().toJson(message.getId());
+        return Response.ok(resp).build();
     }
 
     @PUT
