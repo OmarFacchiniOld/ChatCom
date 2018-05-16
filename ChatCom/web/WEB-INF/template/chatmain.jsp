@@ -81,6 +81,7 @@
         <form id="chatgroup-form"> 
             <div class="modal-body">
                 <input id="name" type="text" class="form-control" placeholder="Insert name of chat" name="chatname"><br />
+                <input id="nickname" type="text" class="form-control" placeholder="Insert nickname of friend" name="chatnick"><br />
             </div>
             <div class="modal-footer">
                 <input id="chatgroup-button" type="submit" class="btn btn-sm btn-outline-success" value="Create">

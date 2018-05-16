@@ -19,10 +19,11 @@ var rootURLsendmessage = "http://localhost:8080/ChatCom/api/message";
 var rootURLsendchatgroup = "http://localhost:8080/ChatCom/api/chatgroup";
 var rootURLsenduser = "http://localhost:8080/ChatCom/api/user";
 var rootURLsendinstance = "http://localhost:8080/ChatCom/api/instance";
+var rootURLgetnick = "http://localhost:8080/ChatCom/api/user?nickname=";
 var lastmsg ="";
 var lastchat="";
 var myuser="";
-
+var idsaved="";
 
 $('#messagesend').submit(false);
 
@@ -36,16 +37,26 @@ window.setInterval(function(){
 
 $("#sendbutton").click(function() {
     if($("#textarea").val() != ""){       
-        sendmessage();
+        sendmessage($("#textarea").val());
+        sendinstance(myuser.id,lastchat.id,idsaved);
         $("#textarea").val("");
     }
 });
 $("#chatgroup-button").click(function() {
-    if($("#name").val() != ""){       
+    if($("#name").val() != "" && $("#nickname").val() != ""){       
         sendchatgroup();
+        var chatid =idsaved;
+        alert(chatid);
+//        getnickid();
+//        var nickid=idsaved;
+        sendinstance(${user.id},chatid,1);
+        sendinstance(3,chatid,1);
         $("#name").val("");
+        $("#nickname").val("");
     }
 });
+
+
 //function getChat() {
 //    $.ajax({
 //        url: rootURLchat+${user.id},
@@ -67,15 +78,26 @@ $("#chatgroup-button").click(function() {
 //}
 
 
-
-function sendmessage(){
+function sendmessage(text){
     var sendobj = new Object();
-    sendobj.data = $("#textarea").val();
+    sendobj.data = text;
     sendobj.type = "";
     var json= JSON.stringify(sendobj);
     send(rootURLsendmessage,json);
 }
 
+function getnickid(){
+    $.ajax({
+        url: rootURLgetnick+$("#nickname").val(),
+        type: "GET",
+
+        contentType: 'application/json; charset=utf-8',
+
+                    success: function(data) {
+                        idsaved = data.id;
+                    }
+    });
+} 
 
 function sendchatgroup(){
     var sendobj = new Object();
@@ -91,7 +113,7 @@ function sendinstance(userid,chatid,messageid){
     sendobj.id_chatgroup = chatid;
     sendobj.id_message = messageid;
     var json= JSON.stringify(sendobj);
-    send(rootURLsendmessage,json);
+    send(rootURLsendinstance,json);
 }
 
 
@@ -101,8 +123,8 @@ function send(url, json){
     contentType: 'application/json; charset=utf-8',
     url: url,
     data: json,
-    success: function() {
-                        
+    success: function(data) {
+                        idsaved = data;
                     },
 });
 }
