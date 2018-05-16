@@ -40,7 +40,12 @@ $("#sendbutton").click(function() {
         $("#textarea").val("");
     }
 });
-
+$("#chatgroup-button").click(function() {
+    if($("#name").val() != ""){       
+        sendchatgroup();
+        $("#name").val("");
+    }
+});
 //function getChat() {
 //    $.ajax({
 //        url: rootURLchat+${user.id},
@@ -74,20 +79,17 @@ function sendmessage(){
 
 function sendchatgroup(){
     var sendobj = new Object();
-    sendobj. = $("#").val();
-    sendobj. = $("#").val();
-    sendobj. = $("#").val();
-    sendobj. = $("#").val();
+    sendobj.name = $("#name").val();
     var json= JSON.stringify(sendobj);
-    send(rootURLsendmessage,json);
+    send(rootURLsendchatgroup,json);
 }
 
 
-function sendinstance(){
+function sendinstance(userid,chatid,messageid){
     var sendobj = new Object();
-    sendobj.id_user = myuser.id;
-    sendobj.id_chatgroup = lastchat.id;
-    sendobj.id_message = "";
+    sendobj.id_user = userid;
+    sendobj.id_chatgroup = chatid;
+    sendobj.id_message = messageid;
     var json= JSON.stringify(sendobj);
     send(rootURLsendmessage,json);
 }

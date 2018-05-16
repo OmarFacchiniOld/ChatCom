@@ -78,13 +78,12 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-        <form action="#" method="POST"> 
+        <form id="chatgroup-form"> 
             <div class="modal-body">
-                <input type="text" class="form-control" placeholder="Insert name of chat" name="chatname"><br />
-                <input type="password" class="form-control" placeholder="Insert" name=""><br />
+                <input id="name" type="text" class="form-control" placeholder="Insert name of chat" name="chatname"><br />
             </div>
             <div class="modal-footer">
-                <input type="submit" class="btn btn-sm btn-outline-success" value="Create">
+                <input id="chatgroup-button" type="submit" class="btn btn-sm btn-outline-success" value="Create">
             </div>
         </form>
     </div>
