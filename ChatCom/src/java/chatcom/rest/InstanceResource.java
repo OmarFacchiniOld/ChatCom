@@ -154,19 +154,19 @@ public class InstanceResource {
         
         Session session = HibernateUtil.getSessionFactory().openSession();
         
-        String sql = "from Instance ins join fetch ins.user usr join fetch ins.chatgroup chat join fetch ins.message msg";
+        String sql = "from Instance ins join fetch ins.user usr join fetch ins.chatgroup chat join fetch ins.message msg ";
         
         if(userId != null)
-            sql +="where usr.id = :userid";
+            sql +=" where usr.id = :userid";
         if(chatId != null)
-            sql +="where chat.id = :chatid";
+            sql +=" where chat.id = :chatid";
         if(fromId != null)
-            sql +="where msg.id > :fromid";
+            sql +=" where msg.id > :fromid";
         
         if(userId != null)
-            sql +="group by chat.id ";
+            sql +=" group by chat.id ";
         
-        sql +="order by msg.id desc";
+        sql +=" order by msg.id desc";
         
         Query query = session.createQuery(sql);
         
