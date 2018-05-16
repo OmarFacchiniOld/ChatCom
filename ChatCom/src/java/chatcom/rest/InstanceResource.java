@@ -130,6 +130,8 @@ public class InstanceResource {
         session.beginTransaction();
         String sql = "from Instance ins join fetch ins.user usr join fetch ins.chatgroup chat join fetch ins.message msg";
         
+        if(id != null)
+            sql +="where ins.id = :id";
         if(userId != null)
             sql +="where usr.id = :userid";
         if(chatId != null)
@@ -144,6 +146,8 @@ public class InstanceResource {
         
         Query query = session.createQuery(sql);
         
+        if(id != null)
+            query.setParameter("id", id);
         if(userId != null)
             query.setParameter("userid", userId);
         if(chatId != null)
