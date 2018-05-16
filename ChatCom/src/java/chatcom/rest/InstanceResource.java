@@ -23,6 +23,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.hibernate.Hibernate;
@@ -115,9 +116,9 @@ public class InstanceResource {
     }*/
 
     @GET
-    @Path("{userid}")
+    @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@PathParam("userid") Integer id) {
+    public Response find(@PathParam("id")Integer id, @QueryParam("userid") Integer userId, @QueryParam("chatid") Integer chatId, @QueryParam("fromid") Integer fromId) {
         
         Gson gson = new /*Gson();*/GsonBuilder()
         .registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY)
@@ -125,11 +126,31 @@ public class InstanceResource {
         
         Session session = HibernateUtil.getSessionFactory().openSession();
         
-        
         //Codice hibernate per il salvataggio
         session.beginTransaction();
-        Query query = session.createQuery("from Instance ins join fetch ins.user usr join fetch ins.chatgroup chat join fetch ins.message msg where usr.id = :userid group by chat.id order by msg.id asc");
-        query.setParameter("userid", id);
+        String sql = "from Instance ins join fetch ins.user usr join fetch ins.chatgroup chat join fetch ins.message msg";
+        
+        if(userId != null)
+            sql +="where usr.id = :userid";
+        if(chatId != null)
+            sql +="where chat.id = :chatid";
+        if(fromId != null)
+            sql +="where msg.id > :fromid";
+        
+        if(userId != null)
+            sql +="group by chat.id ";
+        
+        sql +="order by msg.id desc";
+        
+        Query query = session.createQuery(sql);
+        
+        if(userId != null)
+            query.setParameter("userid", userId);
+        if(chatId != null)
+            query.setParameter("chatid", chatId);
+        if(fromId != null)
+            query.setParameter("fromid", fromId);
+         
         List<Instance> instances = (List<Instance>) query.list();
         session.getTransaction().commit();
         
