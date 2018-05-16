@@ -94,23 +94,12 @@ public class UserResource {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@PathParam("id") Integer id, @QueryParam("nickname") String nickname ) {
+    public Response find(@PathParam("id") Integer id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         
         //Codice hibernate per il salvataggio
         session.beginTransaction();
-        User user = null;
-        
-        if(id != null)
-            user = (User) session.get(User.class, id);
-        
-        if(nickname != null){
-            Query query = session.createQuery("from User usr where usr.nickname = :nickname");
-            query.setParameter("nickname", nickname);
-            List<User> users = (List<User>)query.list();
-            if(users != null)
-                user = users.get(0);
-        }
+        User user = (User) session.get(User.class, id);
         
         session.getTransaction().commit();
         
@@ -125,12 +114,18 @@ public class UserResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findAll() {
+    public Response findAll(@QueryParam("nickname") String nickname ) {
         Gson gson = new Gson();
         Session session = HibernateUtil.getSessionFactory().openSession();
         
         //Codice hibernate per la select *
         List<User> users = (List<User>) session.createQuery("from User").list();
+        
+        if(nickname != null){
+            Query query = session.createQuery("from User usr where usr.nickname = :nickname");
+            query.setParameter("nickname", nickname);
+            users = (List<User>)query.list();
+        }
         
         String ret = gson.toJson(users);
         return Response.ok(ret).build();
