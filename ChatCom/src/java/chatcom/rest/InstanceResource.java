@@ -118,7 +118,7 @@ public class InstanceResource {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@PathParam("id")Integer id, @QueryParam("userid") Integer userId, @QueryParam("chatid") Integer chatId, @QueryParam("fromid") Integer fromId) {
+    public Response find(@PathParam("id")Integer id) {
         
         Gson gson = new /*Gson();*/GsonBuilder()
         .registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY)
@@ -128,32 +128,10 @@ public class InstanceResource {
         
         //Codice hibernate per il salvataggio
         session.beginTransaction();
-        String sql = "from Instance ins join fetch ins.user usr join fetch ins.chatgroup chat join fetch ins.message msg";
-        
-        if(id != null)
-            sql +="where ins.id = :id";
-        if(userId != null)
-            sql +="where usr.id = :userid";
-        if(chatId != null)
-            sql +="where chat.id = :chatid";
-        if(fromId != null)
-            sql +="where msg.id > :fromid";
-        
-        if(userId != null)
-            sql +="group by chat.id ";
-        
-        sql +="order by msg.id desc";
+        String sql = "from Instance ins join fetch ins.user usr join fetch ins.chatgroup chat join fetch ins.message msg where ins.id = :id";
         
         Query query = session.createQuery(sql);
-        
-        if(id != null)
-            query.setParameter("id", id);
-        if(userId != null)
-            query.setParameter("userid", userId);
-        if(chatId != null)
-            query.setParameter("chatid", chatId);
-        if(fromId != null)
-            query.setParameter("fromid", fromId);
+        query.setParameter("id", id);
          
         List<Instance> instances = (List<Instance>) query.list();
         session.getTransaction().commit();
@@ -169,15 +147,38 @@ public class InstanceResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findAll() {
+    public Response findAll(@QueryParam("userid") Integer userId, @QueryParam("chatid") Integer chatId, @QueryParam("fromid") Integer fromId) {
         Gson gson = /*new Gson();*/new GsonBuilder()
         .registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY)
         .create();
         
         Session session = HibernateUtil.getSessionFactory().openSession();
         
-        //Codice hibernate per la select *
-        List<Instance> instances = (List<Instance>) session.createQuery("from Instance").list();
+        String sql = "from Instance ins join fetch ins.user usr join fetch ins.chatgroup chat join fetch ins.message msg";
+        
+        if(userId != null)
+            sql +="where usr.id = :userid";
+        if(chatId != null)
+            sql +="where chat.id = :chatid";
+        if(fromId != null)
+            sql +="where msg.id > :fromid";
+        
+        if(userId != null)
+            sql +="group by chat.id ";
+        
+        sql +="order by msg.id desc";
+        
+        Query query = session.createQuery(sql);
+        
+        if(userId != null)
+            query.setParameter("userid", userId);
+        if(chatId != null)
+            query.setParameter("chatid", chatId);
+        if(fromId != null)
+            query.setParameter("fromid", fromId);
+         
+        List<Instance> instances = (List<Instance>) query.list();
+        
         Type listType = new TypeToken<List<Instance>>() {}.getType();
         String ret = gson.toJson(instances,listType);
         return Response.ok(ret).build();
