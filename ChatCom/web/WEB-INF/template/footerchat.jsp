@@ -14,7 +14,7 @@
     
     <script>
 
-//var rootURLchat = "http://localhost:8080/ChatCom/api/instance?userid=";
+var rootURLchat = "http://localhost:8080/ChatCom/api/instance?userid=";
 var rootURLsendmessage = "http://localhost:8080/ChatCom/api/message";
 var rootURLsendchatgroup = "http://localhost:8080/ChatCom/api/chatgroup";
 var rootURLsenduser = "http://localhost:8080/ChatCom/api/user";
@@ -22,79 +22,80 @@ var rootURLsendinstance = "http://localhost:8080/ChatCom/api/instance";
 var rootURLgetnick = "http://localhost:8080/ChatCom/api/user?nickname=";
 var lastmsg ="";
 var lastchat="";
-var myuser="";
-var idsaved="";
 
 $('#messagesend').submit(false);
+$('#chatgroup-form').submit(false);
 
-//getChat();
+getChat();
 
 window.setInterval(function(){
   $('.profilecard').remove();
-//  getChat();
+  getChat();
 }, 5000);
 
 
 $("#sendbutton").click(function() {
     if($("#textarea").val() != ""){       
-        sendmessage($("#textarea").val());
-        sendinstance(myuser.id,lastchat.id,idsaved);
+        sendmessage($("#textarea").val(),${user.id});
         $("#textarea").val("");
     }
 });
 $("#chatgroup-button").click(function() {
-    if($("#name").val() != "" && $("#nickname").val() != ""){       
+    if($("#name").val() != "" && $("#nickname").val() != ""){
         sendchatgroup();
-        var chatid =idsaved;
-        alert(chatid);
-//        getnickid();
-//        var nickid=idsaved;
-        sendinstance(${user.id},chatid,1);
-        sendinstance(3,chatid,1);
-        $("#name").val("");
-        $("#nickname").val("");
     }
 });
 
 
-//function getChat() {
-//    $.ajax({
-//        url: rootURLchat+${user.id},
-//        type: "GET",
-//
-//        contentType: 'application/json; charset=utf-8',
-//
-//                    success: function(data) {
-//                        $.each(data, function (index, data){
-//                            addchat(data.chatgroup.name,data.message.data,index);
-//                            myuser = data.user;
-//                           $("#chat"+index).click(function() {
-//                               //getAllMessages(data.chatgroup.id)
-//                               lastchat= data.chatgroup;
-//                            });
-//                        });
-//                    }
-//    });
-//}
-
-
-function sendmessage(text){
-    var sendobj = new Object();
-    sendobj.data = text;
-    sendobj.type = "";
-    var json= JSON.stringify(sendobj);
-    send(rootURLsendmessage,json);
-}
-
-function getnickid(){
+function getChat() {
     $.ajax({
-        url: rootURLgetnick+$("#nickname").val(),
+        url: rootURLchat+${user.id},
         type: "GET",
 
         contentType: 'application/json; charset=utf-8',
 
                     success: function(data) {
-                        idsaved = data.id;
+                        $.each(data, function (index, data){
+                            addchat(data.chatgroup.name,data.message.data,index);
+                           $("#chat"+index).click(function() {
+                               //getAllMessages(data.chatgroup.id)
+                               lastchat= data.chatgroup;
+                            });
+                        });
+                    }
+    });
+}
+
+
+function sendmessage(text,myid){
+    var sendobj = new Object();
+    sendobj.data = text;
+    sendobj.type = "";
+    var json= JSON.stringify(sendobj);
+    ajaxmessage(rootURLsendmessage,json,myid);
+}
+
+function ajaxmessage(url, json,myid){
+    $.ajax({
+    type: "POST",
+    contentType: 'application/json; charset=utf-8',
+    url: url,
+    data: json,
+    success: function(data) {
+                        sendinstance(myid,lastchat.id,data);
+                    },
+});
+}
+
+function getnickid(idchat, nick){
+    $.ajax({
+        url: rootURLgetnick+nick,
+        type: "GET",
+
+        contentType: 'application/json; charset=utf-8',
+
+                    success: function(data) {
+                        finalchat(idchat,data[0].id,${user.id});
                     }
     });
 } 
@@ -103,9 +104,34 @@ function sendchatgroup(){
     var sendobj = new Object();
     sendobj.name = $("#name").val();
     var json= JSON.stringify(sendobj);
-    send(rootURLsendchatgroup,json);
+    ajaxchat(rootURLsendchatgroup,json);
 }
 
+
+function ajaxchat(url, json){
+    $.ajax({
+    type: "POST",
+    contentType: 'application/json; charset=utf-8',
+    url: url,
+    data: json,
+    success: function(data) {
+                        getnickid(data,$("#nickname").val());
+                    },
+});
+}
+
+function finalchat(idchat,idnick,myid){
+    var myuserob = new Object();
+    myuserob.id = myid;
+    var nickuserob = new Object();
+    nickuserob.id = idnick;
+    var chatob = new Object();
+    chatob.id = idchat;
+    var msg = new Object();
+    msg.id = 1;
+    sendinstance(myid,idchat,1);
+    sendinstance(nickuserob.id,chat.id,msg.id);
+}
 
 function sendinstance(userid,chatid,messageid){
     var sendobj = new Object();
@@ -113,7 +139,7 @@ function sendinstance(userid,chatid,messageid){
     sendobj.id_chatgroup = chatid;
     sendobj.id_message = messageid;
     var json= JSON.stringify(sendobj);
-    send(rootURLsendinstance,json);
+    send(rootURLsendinstance+"?userid="+userid+"&chatid="+chatid+"&fromid="+messageid,json);
 }
 
 
@@ -123,8 +149,8 @@ function send(url, json){
     contentType: 'application/json; charset=utf-8',
     url: url,
     data: json,
-    success: function(data) {
-                        idsaved = data;
+    success: function() {
+        
                     },
 });
 }
