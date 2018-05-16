@@ -19,9 +19,10 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
@@ -93,12 +94,23 @@ public class UserResource {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@PathParam("id") Integer id) {
+    public Response find(@PathParam("id") Integer id, @QueryParam("nickname") String nickname ) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         
         //Codice hibernate per il salvataggio
         session.beginTransaction();
-        User user = (User) session.get(User.class, id);
+        User user = null;
+        
+        if(id != null)
+            user = (User) session.get(User.class, id);
+        
+        if(nickname != null){
+            Query query = session.createQuery("from User usr where usr.nickname = :nickname");
+            query.setParameter("nickname", nickname);
+            List<User> users = (List<User>)query.list();
+            if(users != null)
+                user = users.get(0);
+        }
         
         session.getTransaction().commit();
         
