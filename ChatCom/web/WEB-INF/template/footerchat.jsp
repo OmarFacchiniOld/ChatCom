@@ -23,15 +23,19 @@ var rootURLgetnick = "http://localhost:8080/ChatCom/api/user?nickname=";
 var lastmsg ="";
 var lastchat="";
 
-$('#messagesend').submit(false);
-$('#chatgroup-form').submit(false);
+var chatlist = getChat();
 
-getChat();
+alert(getuserbyid(3));
 
-window.setInterval(function(){
+alert("ciao");
+
+//$('#messagesend').submit(false);
+//$('#chatgroup-form').submit(false);
+
+/*window.setInterval(function(){
   $('.profilecard').remove();
   getChat();
-}, 5000);
+}, 5000);*/
 
 
 $("#sendbutton").click(function() {
@@ -42,7 +46,9 @@ $("#sendbutton").click(function() {
 });
 $("#chatgroup-button").click(function() {
     if($("#name").val() != "" && $("#nickname").val() != ""){
-        sendchatgroup();
+        var idchat= sendchatgroup();
+        sendinstance(getuserbyid(${user.id}),getchatgroupbyid(idchat),getmessagebyid(1));
+        getChat();
     }
 });
 
@@ -56,6 +62,7 @@ function getChat() {
 
                     success: function(data) {
                         $.each(data, function (index, data){
+                            if()
                             addchat(data.chatgroup.name,data.message.data,index);
                            $("#chat"+index).click(function() {
                                //getAllMessages(data.chatgroup.id)
@@ -104,7 +111,8 @@ function sendchatgroup(){
     var sendobj = new Object();
     sendobj.name = $("#name").val();
     var json= JSON.stringify(sendobj);
-    ajaxchat(rootURLsendchatgroup,json);
+    var nickid = ajaxchat(rootURLsendchatgroup,json);
+    return nickid;
 }
 
 
@@ -120,26 +128,57 @@ function ajaxchat(url, json){
 });
 }
 
+// TODO: problema
 function finalchat(idchat,idnick,myid){
-    var myuserob = new Object();
-    myuserob.id = myid;
-    var nickuserob = new Object();
-    nickuserob.id = idnick;
-    var chatob = new Object();
-    chatob.id = idchat;
-    var msg = new Object();
-    msg.id = 1;
-    sendinstance(myid,idchat,1);
-    sendinstance(nickuserob.id,chat.id,msg.id);
+    sendinstance(getuserbyid(nickuserob.id),getchatgroupbyid(chat.id),getmessagebyid(msg.id));
 }
 
-function sendinstance(userid,chatid,messageid){
+function getchatgroupbyid(idchatgroup){
+    $.ajax({
+        url: "http://localhost:8080/ChatCom/api/chatgroup/"+idchatgroup,
+        type: "GET",
+
+        contentType: 'application/json; charset=utf-8',
+
+                    success: function(data) {
+                        return data;
+                    }
+    });
+} 
+
+function getmessagebyid(idmessage){
+    $.ajax({
+        url: "http://localhost:8080/ChatCom/api/message/"+idmessage,
+        type: "GET",
+
+        contentType: 'application/json; charset=utf-8',
+
+                    success: function(data) {
+                        return data;
+                    }
+    });
+} 
+
+function getuserbyid(iduser){
+    $.ajax({
+        url: "http://localhost:8080/ChatCom/api/user/"+iduser,
+        type: "GET",
+
+        contentType: 'application/json; charset=utf-8',
+
+                    success: function(data) {
+                        return data;
+                    }
+    });
+} 
+
+function sendinstance(user,chat,message){
     var sendobj = new Object();
-    sendobj.id_user = userid;
-    sendobj.id_chatgroup = chatid;
-    sendobj.id_message = messageid;
+    sendobj.user = user;
+    sendobj.chatgroup = chat;
+    sendobj.message = message;
     var json= JSON.stringify(sendobj);
-    send(rootURLsendinstance+"?userid="+userid+"&chatid="+chatid+"&fromid="+messageid,json);
+    send(rootURLsendinstance,json);
 }
 
 
