@@ -47,7 +47,7 @@ public class ChatgroupResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response create(String body, @QueryParam("idutente")Integer idutente) {
+    public Response create(String body, @QueryParam("userid")Integer userid) {
         
         Gson gson = new Gson();
         
@@ -59,17 +59,28 @@ public class ChatgroupResource {
         session.beginTransaction();
         session.save(chatGroup);
         
+        //Almeno l' utente esiste per forza perchè ha creato la chat
         Query query = session.createQuery("from User user where usr.id = :userid");
-        query.setParameter("userid", idutente);
+        query.setParameter("userid", userid);
         List<User> users = (List<User>) query.list();
         
+        //Verificio se il messaggio esiste
         Query query1 = session.createQuery("from Message msg where msg.id = 1");
         List<Message> messages = (List<Message>) query1.list();
+        
+        Message message;
+        if(messages.size() > 0){
+            message = messages.get(0);
+        }else{
+            message = new Message();
+            message.setData("Chat Creata");
+            session.save(message);
+        }
         
         Instance instance = new Instance();
         instance.setUser(users.get(0));
         instance.setChatgroup(chatGroup);
-        instance.setMessage(messages.get(0));
+        instance.setMessage(message);
         
         session.save(instance);
         
