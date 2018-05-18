@@ -7,6 +7,9 @@ package chatcom.rest;
 
 import chatcom.hibernateutil.HibernateUtil;
 import chatcom.model.Chatgroup;
+import chatcom.model.Instance;
+import chatcom.model.Message;
+import chatcom.model.User;
 import com.google.gson.Gson;
 import java.util.List;
 import javax.ws.rs.core.Context;
@@ -19,8 +22,10 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
@@ -42,7 +47,7 @@ public class ChatgroupResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response create(String body) {
+    public Response create(String body, @QueryParam("idutente")Integer idutente) {
         
         Gson gson = new Gson();
         
@@ -53,6 +58,21 @@ public class ChatgroupResource {
         //Codice hibernate per il salvataggio
         session.beginTransaction();
         session.save(chatGroup);
+        
+        Query query = session.createQuery("from User user where usr.id = :userid");
+        query.setParameter("userid", idutente);
+        List<User> users = (List<User>) query.list();
+        
+        Query query1 = session.createQuery("from Message msg where msg.id = 1");
+        List<Message> messages = (List<Message>) query1.list();
+        
+        Instance instance = new Instance();
+        instance.setUser(users.get(0));
+        instance.setChatgroup(chatGroup);
+        instance.setMessage(messages.get(0));
+        
+        session.save(instance);
+        
         session.getTransaction().commit();
         
         String resp = new Gson().toJson(chatGroup.getId());
@@ -113,12 +133,18 @@ public class ChatgroupResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findAll() {
+    public Response findAll(@QueryParam("chatname") String chatname) {
         Gson gson = new Gson();
         Session session = HibernateUtil.getSessionFactory().openSession();
         
         //Codice hibernate per la select *
         List<Chatgroup> chatGroups = (List<Chatgroup>) session.createQuery("from Chatgroup").list();
+        
+        if(chatname != null){
+            Query query = session.createQuery("from Chatgroup chat where chat.name = :chatname order by chat.id desc limit 1");
+            query.setParameter("chatname", chatname);
+            chatGroups = (List<Chatgroup>)query.list();
+        }
         
         String ret = gson.toJson(chatGroups);
         return Response.ok(ret).build();

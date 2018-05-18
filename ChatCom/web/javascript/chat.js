@@ -4,9 +4,6 @@
  * and open the template in the editor.
  */
 
-
-
-
 $("#buttonopen").click(function () {
     if ($("#menu").css("display") != "none") {
         $("#menu").css("display", "none");
