@@ -14,8 +14,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
            
-           var lastmessage = "";
-           var lastchat = "";
+           var selectedchat = "";
         
            $("#buttonopen").click(function () {
             if ($("#menu").css("display") != "none") {
@@ -41,9 +40,8 @@
             event.preventDefault();
             var messagedata = $("#textarea").val();
             
-            if(messagedata != ""){   //non so in che chat li sto inserendo i messaggi, inserisco prima il messaggio e poi l' istanza    
-                /*sendmessage($("#textarea").val(),${user.id});
-                $("#textarea").val("");*/
+            if(messagedata != "" && selectedchat != ""){   //non so in che chat li sto inserendo i messaggi, inserisco prima il messaggio e poi l' istanza    
+                postmessage(createmessage(messagedata), ${user.id}, selectedchat.id);
             }
         });
         
@@ -71,7 +69,7 @@
                        console.log("clicked "+chat.name);
                        
                        //getAllMessages(data.chatgroup.id)
-                       //lastchat= chat.chatgroup;
+                       selectedchat = chat;
                     });
                 });
             });
@@ -135,14 +133,18 @@
             });
         }*/
         
-        function postmessage(message, userid){
+        function postmessage(message, userid, chatid){
             $.ajax({
                 type: "POST",
                 contentType: 'application/json; charset=utf-8',
-                url: "http://localhost:8080/ChatCom/api/message/?idutente="+userid,
+                url: "http://localhost:8080/ChatCom/api/message/user/"+userid+"/chatgroup/"+chatid,
                 data: JSON.stringify(message),
                 success: function(response) {
                     console.log(response);
+                    
+                    //mostro il messaggio che ho inviato
+                    var message = JSON.parse(response);
+                    dxtext(message);
                 }
             });
         }

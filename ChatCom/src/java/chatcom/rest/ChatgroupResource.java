@@ -48,6 +48,7 @@ public class ChatgroupResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/user/{userid}")
+    //TODO: Aggiungere una instanza anche per il tipo di cui abbiamo dato il nickname
     public Response createUserChat(String body, @PathParam("userid")Integer userid) {
         
         Gson gson = new Gson();

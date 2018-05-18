@@ -6,7 +6,10 @@
 package chatcom.rest;
 
 import chatcom.hibernateutil.HibernateUtil;
+import chatcom.model.Chatgroup;
+import chatcom.model.Instance;
 import chatcom.model.Message;
+import chatcom.model.User;
 import com.google.gson.Gson;
 import java.util.List;
 import javax.ws.rs.core.Context;
@@ -22,6 +25,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
@@ -39,6 +43,45 @@ public class MessageResource {
      * Creates a new instance of MessageResource
      */
     public MessageResource() {
+    }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/user/{userid}/chatgroup/{chatid}")
+    //TODO: Aggiungere una instanza anche per il tipo di cui abbiamo dato il nickname
+    public Response createUserChat(String body, @PathParam("userid")Integer userid, @PathParam("chatid")Integer chatid) {
+        
+        Gson gson = new Gson();
+        
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        
+        Message message = gson.fromJson(body, Message.class);
+        
+        //Codice hibernate per il salvataggio
+        session.beginTransaction();
+        session.save(message);
+        
+        //Almeno l' utente esiste per forza perchè ha creato la chat
+        Query query = session.createQuery("from User usr where usr.id = :userid");
+        query.setParameter("userid", userid);
+        List<User> users = (List<User>) query.list();
+        
+        //Verificio se il messaggio esiste
+        Query query1 = session.createQuery("from Chatgroup chat where chat.id = :chatid");
+        query1.setParameter("chatid", chatid);
+        List<Chatgroup> chatgroups = (List<Chatgroup>) query1.list();
+        
+        Instance instance = new Instance();
+        instance.setUser(users.get(0));
+        instance.setChatgroup(chatgroups.get(0));
+        instance.setMessage(message);
+        
+        session.save(instance);
+        
+        session.getTransaction().commit();
+        
+        String resp = new Gson().toJson(message);
+        return Response.ok(resp).build();
     }
 
     @POST
