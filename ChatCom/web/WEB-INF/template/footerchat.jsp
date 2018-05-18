@@ -32,11 +32,16 @@
                 $("#chatcontainer").css("min-height", "60vh");
             }
         });
+        
+        //prendo tutte le chat dell utente
+        getchatgroupsbyuserid(${user.id});
 
-        //Per creare un messaggio
+        //TODO: Per creare un messaggio
         $("#sendbutton").click(function(event) {
             event.preventDefault();
-            if($("#textarea").val() != ""){   //non so in che chat li sto inserendo i messaggi, inserisco prima il messaggio e poi l' istanza    
+            var messagedata = $("#textarea").val();
+            
+            if(messagedata != ""){   //non so in che chat li sto inserendo i messaggi, inserisco prima il messaggio e poi l' istanza    
                 /*sendmessage($("#textarea").val(),${user.id});
                 $("#textarea").val("");*/
             }
@@ -45,37 +50,34 @@
         //Per creare la chat
         $("#chatgroup-button").click(function(event) {
             event.preventDefault();
-            if($("#name").val() != "" && $("#nickname").val() != ""){
-    
-                var chatgroupname = $("#name").val(); //prendo il nome della chat dal form
+            var chatgroupname = $("#name").val(); //prendo il nome della chat dal form
+            var chatnick = $("#nickname").val();  // prendo il nome del tipo a cui voglio scrivere
+            
+            if(chatgroupname != "" && chatnick != ""){
                 postchat(createchat(chatgroupname), ${user.id});
-                
-                //var chatnick = $("#nickname").val();  // prendo il nome del tipo a cui voglio scrivere
+                $('#NewChatModal').modal('hide');
             }
         });
-        
-        function getchatsbyuserid(iduser){
-            $.getJSON("http://localhost:8080/ChatCom/api/instance?userid="+iduser, function(response){
-                console.log(response);
-                /*$.each(data, function (index, data){
-                                    addchat(data.chatgroup.name,data.message.data,index);
-                                   $("#chat"+index).click(function() {
-                                       //getAllMessages(data.chatgroup.id)
-                                       lastchat= data.chatgroup;
-                                    });
-                                });*/
-            });
-        } 
-        
-        /** **/
 
-        function getchatgroupbyid(idchatgroup){
-            $.getJSON("http://localhost:8080/ChatCom/api/chatgroup/"+idchatgroup, function(response){
+        function getchatgroupsbyuserid(userid){
+            $.getJSON("http://localhost:8080/ChatCom/api/chatgroup?userid="+userid, function(response){
                 console.log(response);
+                
+                $.each(response, function (index, chat){
+                   //aggiungo la chat ricevuta
+                    displaychat(chat);
+                    
+                   $("#chat"+chat.id).click(function() {
+                       console.log("clicked "+chat.name);
+                       
+                       //getAllMessages(data.chatgroup.id)
+                       //lastchat= chat.chatgroup;
+                    });
+                });
             });
         } 
         
-        function getchatgroupbylastchatname(chatname){
+        /*function getchatgroupbylastchatname(chatname){
             $.getJSON("http://localhost:8080/ChatCom/api/chatgroup/?chatname="+chatname, function(response){
                 console.log(response);
             });
@@ -103,13 +105,13 @@
             $.getJSON("http://localhost:8080/ChatCom/api/instance/"+idinstance, function(response){
                 console.log(response);
             });
-        } 
+        }*/ 
         
         function postchat(chat, userid){
             $.ajax({
                 type: "POST",
                 contentType: 'application/json; charset=utf-8',
-                url: "http://localhost:8080/ChatCom/api/chatgroup?userid="+userid,
+                url: "http://localhost:8080/ChatCom/api/chatgroup/user/"+userid,
                 data: JSON.stringify(chat),
                 success: function(response) {
                     console.log(response);
@@ -167,19 +169,17 @@
             message.data = data;
             return message;
         }
-        
-        /** **/
 
-        function sxtext(name, text) {
-            $('#start').append('<div class="row messaggio"><div class="col-3"></div><div class="col-2"><div class="card message"><div class="card-header"><h6 class="card-title">' + name + '</h6></div><div class="card-body"><p class="card-text">' + text + '</p></div></div></div><div class="col-7"></div></div>');
+        function sxtext(message) {
+            $('#start').append('<div class="row messaggio"><div class="col-3"></div><div class="col-2"><div class="card message"><div class="card-header"><h6 class="card-title">' + message.id + '</h6></div><div class="card-body"><p class="card-text">' + message.data + '</p></div></div></div><div class="col-7"></div></div>');
         }
 
-        function dxtext(name, text) {
-            $('#start').append('<div class="row messaggio"><div class="col-7"></div><div class="col-2"><div class="card message"><div class="card-header"><h6 class="card-title">' + name + '</h6></div><div class="card-body"><p class="card-text">' + text + '</p></div></div></div><div class="col-3"></div></div>');
+        function dxtext(message) {
+            $('#start').append('<div class="row messaggio"><div class="col-7"></div><div class="col-2"><div class="card message"><div class="card-header"><h6 class="card-title">' + message.id + '</h6></div><div class="card-body"><p class="card-text">' + message.data + '</p></div></div></div><div class="col-3"></div></div>');
         }
 
         function displaychat(chat) {
-            $('#secondstart').append('<div id="' +chat.id+ '" class="card profilecard"><div class="card-header"><img class="profileimage" src="images/test.jpeg"></div><div class="card-body"><h5 class="card-title">' + chat.name + '</h5><h6 class="card-subtitle mb-2 text-muted">' + chat.text + '</h6></div></div>');
+            $('#secondstart').append('<div id="chat' +chat.id+ '" class="card profilecard"><div class="card-header"><img class="profileimage" src="images/test.jpeg"></div><div class="card-body"><h5 class="card-title">' + chat.name + '</h5><h6 class="card-subtitle mb-2 text-muted">' + chat.text + '</h6></div></div>');
         } 
         });
     </script>

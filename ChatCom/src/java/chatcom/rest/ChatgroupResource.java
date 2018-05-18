@@ -44,10 +44,11 @@ public class ChatgroupResource {
      */
     public ChatgroupResource() {
     }
-
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response create(String body, @QueryParam("userid")Integer userid) {
+    @Path("/user/{userid}")
+    public Response createUserChat(String body, @PathParam("userid")Integer userid) {
         
         Gson gson = new Gson();
         
@@ -60,7 +61,7 @@ public class ChatgroupResource {
         session.save(chatGroup);
         
         //Almeno l' utente esiste per forza perchè ha creato la chat
-        Query query = session.createQuery("from User user where usr.id = :userid");
+        Query query = session.createQuery("from User usr where usr.id = :userid");
         query.setParameter("userid", userid);
         List<User> users = (List<User>) query.list();
         
@@ -86,9 +87,28 @@ public class ChatgroupResource {
         
         session.getTransaction().commit();
         
-        String resp = new Gson().toJson(chatGroup.getId());
+        String resp = new Gson().toJson(chatGroup);
         return Response.ok(resp).build();
     }
+
+    /*@POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response create(String body) {
+        
+        Gson gson = new Gson();
+        
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        
+        Chatgroup chatGroup = gson.fromJson(body, Chatgroup.class);
+        
+        //Codice hibernate per il salvataggio
+        session.beginTransaction();
+        session.save(chatGroup);
+        session.getTransaction().commit();
+        
+        String resp = new Gson().toJson(chatGroup);
+        return Response.ok(resp).build();
+    }*/
 
     @PUT
     @Path("{id}")
@@ -144,7 +164,7 @@ public class ChatgroupResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findAll(@QueryParam("chatname") String chatname) {
+    public Response findAll(@QueryParam("chatname") String chatname, @QueryParam("userid")Integer userid) {
         Gson gson = new Gson();
         Session session = HibernateUtil.getSessionFactory().openSession();
         
@@ -154,6 +174,10 @@ public class ChatgroupResource {
         if(chatname != null){
             Query query = session.createQuery("from Chatgroup chat where chat.name = :chatname order by chat.id desc limit 1");
             query.setParameter("chatname", chatname);
+            chatGroups = (List<Chatgroup>)query.list();
+        }else if(userid != null){
+            Query query = session.createQuery("select chat as chati from Instance ins join ins.user usr join ins.chatgroup chat where usr.id = :userid order by chat.id asc");
+            query.setParameter("userid", userid);
             chatGroups = (List<Chatgroup>)query.list();
         }
         
