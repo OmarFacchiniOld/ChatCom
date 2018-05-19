@@ -161,13 +161,20 @@ public class MessageResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findAll(@QueryParam("idutente")String idutente, @QueryParam("idchat")String idchat) {
+    public Response findAll(@QueryParam("idchat")String idchat, @QueryParam("lastmsg")String lastmsg) {
         Gson gson = new Gson();
 
         Session session = HibernateUtil.getSessionFactory().openSession();
 
         //Codice hibernate per la select *
         List<Message> messages = (List<Message>) session.createQuery("from Message").list();
+        
+        //query per predere l' ultimo messaggio
+        if(idchat != null && lastmsg != null && lastmsg == "1"){
+            Query query = session.createQuery("select msg as mess from Instance ins join ins.chatgroup chat where chat.id = :chatid order by msg.id desc limit 1");
+            query.setParameter("chatid", idchat);
+            messages = (List<Message>) query.list();
+        }
 
         String ret = gson.toJson(messages);
         return Response.ok(ret).build();

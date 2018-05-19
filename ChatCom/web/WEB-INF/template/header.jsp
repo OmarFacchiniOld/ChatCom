@@ -23,6 +23,6 @@
         <!-- Custom style -->
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
         <!-- Load ChatCom Icon -->
-        <!--<link rel="icon" href="/images/icona.svg">-->
+        <!--<link rel="icon" href="/images/icona.svg ">-->
     </head>
     <body>

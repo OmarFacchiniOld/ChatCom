@@ -47,9 +47,8 @@ public class ChatgroupResource {
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/user/{userid}")
-    //TODO: Aggiungere una instanza anche per il tipo di cui abbiamo dato il nickname
-    public Response createUserChat(String body, @PathParam("userid")Integer userid) {
+    @Path("/user/{userid}/withnick/{usernick}")
+    public Response createUserChat(String body, @PathParam("userid")Integer userid, @PathParam("usernick")String usernick) {
         
         Gson gson = new Gson();
         
@@ -65,6 +64,10 @@ public class ChatgroupResource {
         Query query = session.createQuery("from User usr where usr.id = :userid");
         query.setParameter("userid", userid);
         List<User> users = (List<User>) query.list();
+        
+        Query query2 = session.createQuery("from User usr where usr.nickname = :usernick");
+        query2.setParameter("usernick", usernick);
+        List<User> users2 = (List<User>) query2.list();
         
         //Verificio se il messaggio esiste
         Query query1 = session.createQuery("from Message msg where msg.id = 1");
@@ -85,6 +88,13 @@ public class ChatgroupResource {
         instance.setMessage(message);
         
         session.save(instance);
+        
+        Instance instance2 = new Instance();
+        instance2.setUser(users2.get(0));
+        instance2.setChatgroup(chatGroup);
+        instance2.setMessage(message);
+        
+        session.save(instance2);
         
         session.getTransaction().commit();
         

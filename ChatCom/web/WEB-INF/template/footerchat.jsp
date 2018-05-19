@@ -14,9 +14,9 @@
     <script type="text/javascript">
         $(document).ready(function(){
            
-           var selectedchat = "";
+        var selectedchat = "";
         
-           $("#buttonopen").click(function () {
+        $("#buttonopen").click(function () {
             if ($("#menu").css("display") != "none") {
                 $("#menu").css("display", "none");
                 $("#chat").css("max-height", "80vh");
@@ -52,7 +52,7 @@
             var chatnick = $("#nickname").val();  // prendo il nome del tipo a cui voglio scrivere
             
             if(chatgroupname != "" && chatnick != ""){
-                postchat(createchat(chatgroupname), ${user.id});
+                postchat(createchat(chatgroupname), ${user.id}, chatnick);
                 $('#NewChatModal').modal('hide');
             }
         });
@@ -68,12 +68,12 @@
                    $("#chat"+chat.id).click(function() {
                        console.log("clicked "+chat.name);
                        
-                       //getAllMessages(data.chatgroup.id)
                        selectedchat = chat;
+                       //getAllMessages(data.chatgroup.id)
                     });
                 });
             });
-        } 
+        }
         
         /*function getchatgroupbylastchatname(chatname){
             $.getJSON("http://localhost:8080/ChatCom/api/chatgroup/?chatname="+chatname, function(response){
@@ -105,11 +105,11 @@
             });
         }*/ 
         
-        function postchat(chat, userid){
+        function postchat(chat, userid, usernick){
             $.ajax({
                 type: "POST",
                 contentType: 'application/json; charset=utf-8',
-                url: "http://localhost:8080/ChatCom/api/chatgroup/user/"+userid,
+                url: "http://localhost:8080/ChatCom/api/chatgroup/user/"+userid+"/withnick/"+usernick,
                 data: JSON.stringify(chat),
                 success: function(response) {
                     console.log(response);
@@ -181,8 +181,9 @@
         }
 
         function displaychat(chat) {
-            $('#secondstart').append('<div id="chat' +chat.id+ '" class="card profilecard"><div class="card-header"><img class="profileimage" src="images/test.jpeg"></div><div class="card-body"><h5 class="card-title">' + chat.name + '</h5><h6 class="card-subtitle mb-2 text-muted">' + chat.text + '</h6></div></div>');
+            $('#secondstart').append('<div id="chat'+chat.id+'" class="card profilecard"><div class="card-header"><img class="profileimage" src="images/test.jpeg"></div><div class="card-body"><h5 class="card-title">' + chat.name + '</h5><h6 class="card-subtitle mb-2 text-muted">' + chat.text + '</h6></div></div>'); //TODO: al posto di chat.text utilmo messaggio
         } 
+        
         });
     </script>
 
